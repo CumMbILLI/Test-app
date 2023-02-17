@@ -1,4 +1,5 @@
 import React, { FC, ReactNode } from 'react';
+import Header from './Header';
 
 interface Props {
   children: ReactNode;
@@ -7,8 +8,8 @@ interface Props {
 const PageWrapper: FC<Props> = ({ children }) => {
   return (
     <div>
-      <div className='w-full h-20 bg-gray-500'></div>
-      {children}
+      <Header />
+      <div className='px-24'>{children}</div>
     </div>
   );
 };

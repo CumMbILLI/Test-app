@@ -1,4 +1,4 @@
 export enum PATHNAMES {
-  HOME = '/home',
+  HOME = '',
   NOT_FOUND = '*',
 }

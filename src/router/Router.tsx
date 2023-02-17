@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { PATHNAMES } from 'constants/routes';
-import PageWrapper from 'components/PageWrapper/PageWrapper';
+import PageWrapper from 'components/Layouts/PageWrapper';
 import AppRoute from './AppRoute';
 import Home from 'pages/Home';
 
