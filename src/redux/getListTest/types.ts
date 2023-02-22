@@ -6,7 +6,7 @@ export enum FetchListTypes {
   FETCH_LIST_ERROR = 'FETCH_LIST_ERROR',
 }
 
-interface FetchListAction {
+export interface FetchListAction {
   type: FetchListTypes.FETCH_LIST;
 }
 

@@ -1,12 +1,11 @@
 import { Dispatch } from 'redux';
 import { instance } from 'services/axios';
-import { FetchListTypes } from './types';
-import { ActionType } from '../types';
+import { ActionType, FetchListTypes } from './types';
 
 export const getTestAsync = () => {
   return async (dispatch: Dispatch<ActionType>) => {
     try {
-      dispatch({ type: FetchListTypes.FETCH_LIST, payload: [] });
+      dispatch({ type: FetchListTypes.FETCH_LIST });
 
       const { data } = await instance.get('/tests');
 
@@ -17,7 +16,7 @@ export const getTestAsync = () => {
     } catch (e) {
       dispatch({
         type: FetchListTypes.FETCH_LIST_ERROR,
-        payload: [],
+        payload: 'Ошибка',
       });
     }
   };

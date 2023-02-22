@@ -7,7 +7,6 @@ const Home = () => {
   const testList = useAppSelector((state) => state.tests);
 
   useEffect(() => {
-    //@ts-ignore
     dispatch(getTestAsync());
   }, [dispatch]);
 
