@@ -1,8 +1,9 @@
 import Button from 'components/Button/Button';
 import { Input } from 'components/FormField/Input';
 import RadioButton from 'components/FormField/RadioButton';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
+import AnswersInputs from './AnswersInputs';
 
 export interface QuestionTyped {
   id: number;
@@ -11,103 +12,106 @@ export interface QuestionTyped {
 }
 
 export interface QuestionsAll {
-  test: {
-    question: QuestionTyped[];
-    answer: {
-      id: number;
-      correntAnswer: number | number[];
-      answer: string[];
-    }[];
-  };
+  question: QuestionTyped[];
 }
 
-const INITIAL_VALUES = {
-  question: [
-    {
-      id: 1,
-      image: '',
-      questionTitle: '',
-    },
-  ],
-  answers: [
-    {
-      id: 1,
-      correctAnswer: 0,
-      answers: ['', ''],
-    },
-  ],
-};
+interface AnswerTyped {
+  answer: string;
+}
+
+interface AnswerAll {
+  answers: AnswerTyped[];
+}
+
+const INITIAL_VALUES = [
+  {
+    id: 1,
+    image: '',
+    questionTitle: '',
+    correctAnswer: 0,
+    answers: [''],
+  },
+];
+
+const INITIAL_VALUES_2 = [{ answer: '' }, { answer: '' }];
 
 const CreateQuestions = () => {
   const { register, control, handleSubmit } = useForm<QuestionsAll>({
     defaultValues: {
-      test: INITIAL_VALUES,
+      question: INITIAL_VALUES,
     },
   });
+
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'test',
+    name: 'question',
   });
 
-  const createAnswerInput = () => console.log(append);
+  const {
+    register: register2,
+    control: control2,
+    handleSubmit: handleSubmit2,
+  } = useForm<AnswerAll>({
+    defaultValues: {
+      answers: INITIAL_VALUES_2,
+    },
+  });
 
-  //   const createQuestion = () =>
-  //     append({
-  //       id: fields.length + 1,
-  //       image: '',
-  //       correctAnswer: 0,
-  //       questionTitle: '',
-  //       answers: ['', ''],
-  //     });
+  const {
+    fields: fields2,
+    append: append2,
+    remove: remove2,
+  } = useFieldArray({
+    control: control2,
+    name: 'answers',
+  });
+
+  const createAnswer = () => append2({ answer: '' });
+
+  // const createQuestion = () =>
+  //   append({
+  //     id: fields.length + 1,
+  //     image: '',
+  //     correctAnswer: 0,
+  //     questionTitle: '',
+  //     answers: ['', ''],
+  //   });
 
   const onSubmit: SubmitHandler<QuestionsAll> = (data) => console.log(data);
 
-  console.log(fields);
+  const onSubmit2: SubmitHandler<AnswerAll> = (data) => console.log(data);
+
+  const onHandleSubmit = (e: any) => {
+    e.preventDefault();
+
+    handleSubmit(onSubmit);
+    handleSubmit2(onSubmit2);
+  };
 
   return (
     <div className='bg-gray-300 mt-10'>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {fields.map(({ answers, id }, index) => (
+      <form onSubmit={onHandleSubmit}>
+        {fields.map(({ id }, index) => (
           <div key={id}>
             <span className='flex justify-center'>Питання {index + 1}</span>
             <Input
               register={register}
-              name={`questions.${index}.questionTitle`}
+              name={`question.${index}.questionTitle`}
             />
-            <div className='grid gap-3 mt-5'>
-              {answers.map((_, _index) => (
-                <div key={_index + index} className='flex gap-3 items-center'>
-                  <RadioButton
-                    value={_index}
-                    register={register}
-                    name={`questions.${index}.correctAnswer`}
-                  />
-                  <Input
-                    placeholder='Відповідь'
-                    register={register}
-                    name={`questions.${index}.answers.${_index}`}
-                  />
-                </div>
-              ))}
-
-              <Button
-                onClick={createAnswerInput}
-                className='w-[200px] ml-6'
-                type='button'
-                color='secondary'
-              >
-                Створити
-              </Button>
-            </div>
+            <div className='grid gap-3 mt-5'></div>
           </div>
         ))}
-        <div>
-          <div className='w-full flex items-center justify-center mt-10'>
-            <Button className='w-[200px]' color='primary' type='submit'>
-              Отправить
-            </Button>
+        {fields2.map((_, index) => (
+          <div>
+            <Input register={register2} name={`answers.${index}.answer`} />
           </div>
-        </div>
+        ))}
+        <Button onClick={createAnswer} className='!w-[200px]' color='primary'>
+          Створити
+        </Button>
+        <Button className='!w-[200px]' color='primary' type='submit'>
+          Отправить
+        </Button>
       </form>
     </div>
   );
