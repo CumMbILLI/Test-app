@@ -1,9 +1,8 @@
 import cn from 'classnames';
 import React, { FC, ReactNode } from 'react';
 
-interface Props {
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
-  type?: 'button' | 'submit';
   color: 'primary' | 'secondary';
   className?: string;
   onClick?: VoidFunction;
@@ -11,15 +10,17 @@ interface Props {
 
 const Button: FC<Props> = ({
   children,
-  type = 'button',
+  form,
+  type,
   color,
   className,
   onClick,
 }) => {
   return (
     <button
-      onClick={onClick}
+      form={form}
       type={type}
+      onClick={onClick}
       className={cn(
         'p-2 text-white font-bold rounded-lg opacity-80 hover:opacity-100 duration-300 w-full',
         className,

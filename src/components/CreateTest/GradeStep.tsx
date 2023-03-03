@@ -29,7 +29,7 @@ const INITIAL_VALUES = [
   },
 ];
 
-const PrecentCurrentAnswer = () => {
+const GradeStep = () => {
   const { register, control, handleSubmit } = useForm<PrecentAnswer>({
     defaultValues: {
       estimates: INITIAL_VALUES,
@@ -52,7 +52,7 @@ const PrecentCurrentAnswer = () => {
       )
     );
 
-  const isLengthCheck = (index: number) => fields.length < index + 1;
+  const isLengthCheck = (index: number) => 3 < index + 1;
 
   const createFieldForm = () =>
     append({
@@ -67,10 +67,7 @@ const PrecentCurrentAnswer = () => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className='w-full h-full bg-gray-300 mt-20 p-5'
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className='w-[800px] h-full'>
       {fields.map(({ id, placeholder }, index) => (
         <div key={id} className='flex w-full'>
           <div className='w-1/2 p-5 border-r-2 border-black flex justify-between'>
@@ -91,14 +88,16 @@ const PrecentCurrentAnswer = () => {
               </div>
             )}
           </div>
-          <div className='w-1/2 h-max p-5 flex items-center justify-center'>
+          <div className='h-max p-5 flex items-center justify-center'>
             <span className='mx-2 text-lg'>від</span>
             <Input
+              className='w-20'
               register={register}
               name={`estimates.${index}.result.${0}`}
             />
             <span className='mx-2 text-lg'>до</span>
             <Input
+              className='w-20'
               register={register}
               name={`estimates.${index}.result.${1}`}
             />
@@ -109,12 +108,10 @@ const PrecentCurrentAnswer = () => {
         <Button onClick={createFieldForm} color='secondary'>
           Создать
         </Button>
-        <Button color='primary' type='submit'>
-          Отправить
-        </Button>
       </div>
+      <button type='submit'>Отправить</button>
     </form>
   );
 };
 
-export default PrecentCurrentAnswer;
+export default GradeStep;

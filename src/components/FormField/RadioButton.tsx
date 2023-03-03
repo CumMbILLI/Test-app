@@ -1,12 +1,5 @@
-import { QuestionsAll } from 'components/CreateTest/CreateQuestions';
-import React, { useState } from 'react';
-import {
-  Path,
-  useFieldArray,
-  useForm,
-  UseFormRegister,
-  UseFormSetValue,
-} from 'react-hook-form';
+import React from 'react';
+import { Path, UseFormRegister } from 'react-hook-form';
 
 interface Props<T extends Record<string, any>> {
   name: Path<T>;
@@ -24,9 +17,12 @@ const RadioButton = <T extends Record<string, any>>({
   className,
 }: Props<T>) => {
   return (
-    <div>
-      <input {...register(name)} type='radio' value={value} />
-    </div>
+    <input
+      className={className}
+      {...register(name, { required })}
+      type='radio'
+      value={value}
+    />
   );
 };
 
