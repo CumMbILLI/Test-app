@@ -1,9 +1,10 @@
+import React, { ButtonHTMLAttributes, FC, ReactNode } from 'react';
 import cn from 'classnames';
-import React, { FC, ReactNode } from 'react';
 
-interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
   color: 'primary' | 'secondary';
+  type: 'button' | 'submit';
   className?: string;
   onClick?: VoidFunction;
 }

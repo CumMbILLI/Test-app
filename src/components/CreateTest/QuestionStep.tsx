@@ -1,24 +1,15 @@
-import React, { useState } from 'react';
+import React, { Dispatch, FC, SetStateAction } from 'react';
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
 
-import Button from 'components/Button/Button';
-import { Input } from 'components/FormField/Input';
-import CheckBox from 'components/CheckBox/CheckBox';
 import Upload from 'components/FormField/Upload';
+import { Input } from 'components/FormField/Input';
+import AnswersFields from './AnswersFields';
+import { QuestionsStepFields } from './types';
 
 import { ReactComponent as TrashSVG } from 'assets/trash.svg';
-import AnswerField from './AnswersFields';
 
-export interface QuestionTyped {
-  id: number;
-  image?: string;
-  questionTitle: string;
-  correctAnswer: string | string[];
-  answers: string[];
-}
-
-export interface QuestionsAll {
-  question: QuestionTyped[];
+interface Props {
+  setCurrentStep: Dispatch<SetStateAction<number>>;
 }
 
 const INITIAL_VALUES = [
@@ -31,14 +22,13 @@ const INITIAL_VALUES = [
   },
 ];
 
-const QuestionStep = () => {
-  const [multipleAnswers, setMultipleAnswers] = useState(false);
-
-  const { register, control, handleSubmit, setValue } = useForm<QuestionsAll>({
-    defaultValues: {
-      question: INITIAL_VALUES,
-    },
-  });
+const QuestionStep: FC<Props> = ({ setCurrentStep }) => {
+  const { register, control, handleSubmit, setValue } =
+    useForm<QuestionsStepFields>({
+      defaultValues: {
+        question: INITIAL_VALUES,
+      },
+    });
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -55,15 +45,21 @@ const QuestionStep = () => {
     });
   };
 
-  const changeMultiAnswer = () => setMultipleAnswers((prev) => !prev);
-
   const removeQuestion = (index: number) => remove(index);
 
-  const onSubmit: SubmitHandler<QuestionsAll> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<QuestionsStepFields> = (data) => {
+    //future request
+    console.log(data);
+    setCurrentStep((prev) => ++prev);
+  };
 
   return (
     <div className='bg-gray-300 mt-10 p-5'>
-      <form className='grid gap-4' onSubmit={handleSubmit(onSubmit)}>
+      <form
+        id='example'
+        className='grid gap-4'
+        onSubmit={handleSubmit(onSubmit)}
+      >
         {fields.map(({ id, answers }, index) => (
           <div key={id} className='border-2 px-5 '>
             <div className='flex text-xl mt-5 px-5'>
@@ -88,17 +84,11 @@ const QuestionStep = () => {
               name={`question.${index}.questionTitle`}
             />
             <div className='grid gap-3 m-5'>
-              {answers.map((_, _index) => (
-                <AnswerField
-                  register={register}
-                  index={index}
-                  _index={_index}
-                />
-              ))}
-              <div className='flex mt-4'>
-                <CheckBox changeMultiAnswer={changeMultiAnswer} />
-                <span className='ml-5'>Декілька відповідей.</span>
-              </div>
+              <AnswersFields
+                register={register}
+                index={index}
+                answers={answers}
+              />
             </div>
           </div>
         ))}
@@ -110,10 +100,6 @@ const QuestionStep = () => {
           >
             + Створити
           </span>
-
-          <Button className='!w-100' color='primary' type='submit'>
-            Отправить
-          </Button>
         </div>
       </form>
     </div>

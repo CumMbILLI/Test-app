@@ -13,15 +13,12 @@ interface Props<T extends Record<string, any>> {
   setValue: UseFormSetValue<T>;
   register?: UseFormRegister<T>;
   placeholder?: string;
-  required?: boolean;
   className?: string;
 }
 
 const Upload = <T extends Record<string, any>>({
   name,
-  register,
-  placeholder = '',
-  required = false,
+  placeholder = 'Виберіть файл',
   setValue,
   className,
 }: Props<T>) => {
@@ -50,7 +47,7 @@ const Upload = <T extends Record<string, any>>({
     >
       <DownloadSVG className='w-16 absolute top-7 left-1/2 -translate-x-1/2' />
       <span className='text-white font-bold absolute bottom-5 z-0'>
-        Виберіть файл
+        {placeholder}
       </span>
       <input
         onChange={dropFile}

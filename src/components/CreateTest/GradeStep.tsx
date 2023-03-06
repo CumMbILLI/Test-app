@@ -1,17 +1,13 @@
-import React from 'react';
+import React, { Dispatch, FC, SetStateAction } from 'react';
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
-import Button from 'components/Button/Button';
+
 import { Input } from 'components/FormField/Input';
 
-interface PrecentAnswer {
-  estimates: PrecentItem[];
-}
+import { ReactComponent as TrashSVG } from 'assets/trash.svg';
+import { GradesFields } from './types';
 
-interface PrecentItem {
-  id: number;
-  name: string;
-  result: string[];
-  placeholder?: string;
+interface Props {
+  setCurrentStep: Dispatch<SetStateAction<number>>;
 }
 
 const INITIAL_VALUES = [
@@ -29,8 +25,8 @@ const INITIAL_VALUES = [
   },
 ];
 
-const GradeStep = () => {
-  const { register, control, handleSubmit } = useForm<PrecentAnswer>({
+const GradeStep: FC<Props> = ({ setCurrentStep }) => {
+  const { register, control, handleSubmit } = useForm<GradesFields>({
     defaultValues: {
       estimates: INITIAL_VALUES,
     },
@@ -40,17 +36,20 @@ const GradeStep = () => {
     name: 'estimates',
   });
 
-  const onSubmit: SubmitHandler<PrecentAnswer> = (data) =>
+  const onSubmit: SubmitHandler<GradesFields> = (data) => {
+    //future request
     console.log(
       Object.assign(
         [],
-        data.estimates.map(({ id, name, placeholder, result }) => ({
+        data.estimates.map(({ id, name, result }) => ({
           id,
           name,
           result,
         }))
       )
     );
+    setCurrentStep((prev) => ++prev);
+  };
 
   const isLengthCheck = (index: number) => 3 < index + 1;
 
@@ -67,28 +66,27 @@ const GradeStep = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className='w-[800px] h-full'>
+    <form id='example' onSubmit={handleSubmit(onSubmit)} className='h-full'>
       {fields.map(({ id, placeholder }, index) => (
         <div key={id} className='flex w-full'>
-          <div className='w-1/2 p-5 border-r-2 border-black flex justify-between'>
+          <div className='w-full p-5 border-r-2 border-black flex justify-between'>
             <div className='w-full'>
               <Input
                 name={`estimates.${index}.name`}
                 register={register}
                 placeholder={placeholder}
-                required={true}
               />
             </div>
+
             {isLengthCheck(index) && (
-              <div
+              <TrashSVG
                 onClick={() => removeField(index)}
-                className='w-10 flex justify-center items-center text-[24px]'
-              >
-                -
-              </div>
+                className='w-6 ml-4 cursor-pointer'
+              />
             )}
           </div>
-          <div className='h-max p-5 flex items-center justify-center'>
+
+          <div className='w-1/2 h-max p-5 flex items-center justify-center'>
             <span className='mx-2 text-lg'>від</span>
             <Input
               className='w-20'
@@ -104,12 +102,13 @@ const GradeStep = () => {
           </div>
         </div>
       ))}
-      <div className='flex gap-10 px-5'>
-        <Button onClick={createFieldForm} color='secondary'>
-          Создать
-        </Button>
-      </div>
-      <button type='submit'>Отправить</button>
+
+      <span
+        onClick={createFieldForm}
+        className='text-base bg-transparent duration-300 font-bold cursor-pointer text-blue-500/80 hover:text-blue-500/100'
+      >
+        + Створити
+      </span>
     </form>
   );
 };

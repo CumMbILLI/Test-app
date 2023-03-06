@@ -1,17 +1,15 @@
-import React, { FC } from 'react';
+import React, { Dispatch, FC, SetStateAction } from 'react';
 import cn from 'classnames';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { Input } from 'components/FormField/Input';
 
-interface FormField {
-  nameTest: string;
-}
+import { NameStepFields } from './types';
 
 interface Props {
   required?: boolean;
   className?: string;
-  setCurrentStep: React.Dispatch<React.SetStateAction<number>>;
+  setCurrentStep: Dispatch<SetStateAction<number>>;
 }
 
 export const NameStep: FC<Props> = ({
@@ -19,9 +17,10 @@ export const NameStep: FC<Props> = ({
   className,
   setCurrentStep,
 }) => {
-  const { register, handleSubmit } = useForm<FormField>();
+  const { register, handleSubmit } = useForm<NameStepFields>();
 
-  const onSubmit: SubmitHandler<FormField> = (data) => {
+  const onSubmit: SubmitHandler<NameStepFields> = (data) => {
+    //future request
     console.log(data);
     setCurrentStep((prev) => ++prev);
   };
@@ -29,7 +28,7 @@ export const NameStep: FC<Props> = ({
   return (
     <form
       id='example'
-      className={cn('w-[800px] h-[200px]', className)}
+      className={cn('', className)}
       onSubmit={handleSubmit(onSubmit)}
     >
       <Input

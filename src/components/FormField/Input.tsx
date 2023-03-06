@@ -26,7 +26,7 @@ export const Input = <T extends Record<string, any>>({
 
   return (
     <div className='flex flex-col gap-2'>
-      {label && <span className='text-lg'>{label}</span>}
+      {label && <span className='text-lg text-left'>{label}</span>}
       <input
         {...register(name, { required })}
         className={defaultClassName}

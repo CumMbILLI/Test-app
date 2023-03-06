@@ -7,9 +7,9 @@ interface Props {
 
 const PageWrapper: FC<Props> = ({ children }) => {
   return (
-    <div className='w-full h-full'>
+    <div>
       <Header />
-      <div className='px-24 h-full w-full'>{children}</div>
+      <div className='h-full w-full'>{children}</div>
     </div>
   );
 };
