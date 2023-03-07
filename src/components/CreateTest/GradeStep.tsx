@@ -69,7 +69,7 @@ const GradeStep: FC<Props> = ({ setCurrentStep }) => {
     <form id='example' onSubmit={handleSubmit(onSubmit)} className='h-full'>
       {fields.map(({ id, placeholder }, index) => (
         <div key={id} className='flex w-full'>
-          <div className='w-full p-5 border-r-2 border-black flex justify-between'>
+          <div className='w-full p-5 border-r-2 border-black'>
             <div className='w-full'>
               <Input
                 name={`estimates.${index}.name`}
