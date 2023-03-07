@@ -28,10 +28,10 @@ export const getTestAsync = () => {
       const { data } = await instance.get('/tests');
 
       dispatch(fetchListSuccess(data));
-    } catch (e: any) {
-      console.log(e.message);
+    } catch (e) {
+      const err = e as AxiosError;
 
-      dispatch(fetchListError(e.message));
+      dispatch(fetchListError(err.message));
     }
   };
 };
