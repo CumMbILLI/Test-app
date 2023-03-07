@@ -1,15 +1,18 @@
 import React, { useEffect } from 'react';
-import TestList from 'components/TestList/TestList';
+import { getTestAsync } from 'redux/getListTest/action';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
 
 const Home = () => {
+  const dispatch = useAppDispatch();
+  const testList = useAppSelector((state) => state.tests);
+
   useEffect(() => {
-    fetch('http://localhost:3000/test')
-      .then((res) => res.json())
-      .then((result) => console.log(result));
-  }, []);
+    dispatch(getTestAsync());
+  }, [dispatch]);
+
   return (
     <div>
-      <TestList />
+      <button>Создать тест</button>
     </div>
   );
 };
