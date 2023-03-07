@@ -1,4 +1,7 @@
-export type ActionType = FetchListAction | FetchListSuccess | FetchListError;
+export type ActionListType =
+  | FetchListAction
+  | FetchListSuccess
+  | FetchListError;
 
 export enum FetchListTypes {
   FETCH_LIST = 'FETCH_LIST',
@@ -12,7 +15,7 @@ export interface FetchListAction {
 
 interface FetchListSuccess {
   type: FetchListTypes.FETCH_LIST_SUCCESS;
-  payload: any[];
+  payload: TestItems[];
 }
 
 interface FetchListError {
@@ -21,12 +24,12 @@ interface FetchListError {
 }
 
 export interface TestsState {
-  testList: TestItems[] | null | undefined;
+  testList?: TestItems[] | null;
   loading: boolean;
-  error: string | null | undefined;
+  error?: string | null;
 }
 
-interface TestItems {
+export interface TestItems {
   id: string;
   name: string;
   completed: boolean;

@@ -1,4 +1,4 @@
-import { ActionType, FetchListTypes, TestsState } from './types';
+import { ActionListType, FetchListTypes, TestsState } from './types';
 
 const initialState: TestsState = {
   loading: true,
@@ -8,7 +8,7 @@ const initialState: TestsState = {
 
 export const getTestsReducer = (
   state: TestsState = initialState,
-  action: ActionType
+  action: ActionListType
 ): TestsState => {
   switch (action.type) {
     case FetchListTypes.FETCH_LIST:

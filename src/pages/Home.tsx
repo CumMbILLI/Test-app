@@ -10,8 +10,6 @@ const Home = () => {
     dispatch(getTestAsync());
   }, [dispatch]);
 
-  console.log(testList);
-
   return (
     <div>
       <button>Создать тест</button>

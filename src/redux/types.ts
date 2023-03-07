@@ -1,3 +1,3 @@
-import { ActionType } from './getListTest/types';
+import { ActionListType } from './getListTest/types';
 
-export type DispatchType = (args: ActionType) => ActionType;
+export type DispatchType = (args: ActionListType) => ActionListType;
