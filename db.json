@@ -3,12 +3,12 @@
     {
       "id": 1,
       "name": "Хто ти із Наруто?",
-      "completed": "false"
+      "completed": false
     },
     {
       "id": 2,
       "name": "Хто ти із Боку но Пику?",
-      "completed": "false"
+      "completed": false
     },
     {
       "id": 3,
@@ -18,12 +18,12 @@
     {
       "id": 4,
       "name": "Хто ти?",
-      "completed": "true"
+      "completed": true
     },
     {
       "id": 5,
       "name": "А я хто?",
-      "completed": "false"
+      "completed": false
     }
   ]
 }
