@@ -25,10 +25,10 @@ const CheckBox = <T extends Record<string, any>>({
 
   const changeState = () => {
     setChecked((prev) => !prev);
-    if (onChange !== undefined) onChange();
+    if (onChange) onChange();
   };
 
-  if (register !== undefined) {
+  if (register) {
     return (
       <input
         value={value}

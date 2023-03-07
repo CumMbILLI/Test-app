@@ -1,5 +1,4 @@
 import React, { Dispatch, FC, SetStateAction } from 'react';
-import cn from 'classnames';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { Input } from 'components/FormField/Input';
@@ -26,14 +25,10 @@ export const NameStep: FC<Props> = ({
   };
 
   return (
-    <form
-      id='example'
-      className={cn('', className)}
-      onSubmit={handleSubmit(onSubmit)}
-    >
+    <form id='example' className={className} onSubmit={handleSubmit(onSubmit)}>
       <Input
         label='Назва тесту'
-        name='nameTest'
+        name='testName'
         register={register}
         required={required}
       />

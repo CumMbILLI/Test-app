@@ -1,17 +1,24 @@
-import React, { FC, useState } from 'react';
+import React, { FC, SetStateAction, useState } from 'react';
 
 import Button from 'components/Button/Button';
 
 import { ReactComponent as ArrowSVG } from 'assets/arrow.svg';
 
-interface Props {
-  fieldsForm: {
-    step: number;
-    component: (props: any) => JSX.Element;
-  }[];
+interface FieldProps {
+  setCurrentStep: React.Dispatch<SetStateAction<number>>;
 }
 
-const MasterForm: FC<Props> = ({ fieldsForm }) => {
+interface FieldFormItem {
+  step: number;
+  component: ({ setCurrentStep }: FieldProps) => JSX.Element;
+}
+
+interface Props {
+  fieldsForm: FieldFormItem[];
+  finaleStep: number;
+}
+
+const MasterForm: FC<Props> = ({ fieldsForm, finaleStep }) => {
   const [currentStep, setCurrentStep] = useState(1);
 
   const nextStep = () => setCurrentStep((prev) => ++prev);
@@ -27,11 +34,10 @@ const MasterForm: FC<Props> = ({ fieldsForm }) => {
 
       <div className='w-[1000px] text-center '>
         <span className='text-3xl select-none'>Крок {currentStep}</span>
-        {fieldsForm.map(
-          ({ step, component: Component }) =>
-            currentStep === step && (
-              <Component key={step} setCurrentStep={setCurrentStep} />
-            )
+        {fieldsForm.map(({ step, component: Component }) =>
+          currentStep === step ? (
+            <Component key={step} setCurrentStep={setCurrentStep} />
+          ) : null
         )}
         <Button
           color='primary'
@@ -44,7 +50,7 @@ const MasterForm: FC<Props> = ({ fieldsForm }) => {
       </div>
 
       <div className='w-8'>
-        {currentStep < 4 && (
+        {currentStep < finaleStep && (
           <ArrowSVG className='rotate-180 cursor-pointer' onClick={nextStep} />
         )}
       </div>

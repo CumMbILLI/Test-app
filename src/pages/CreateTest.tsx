@@ -25,7 +25,7 @@ const FIELDS_FORM = [
 ];
 
 const CreateTest = () => {
-  return <MasterForm fieldsForm={FIELDS_FORM} />;
+  return <MasterForm finaleStep={4} fieldsForm={FIELDS_FORM} />;
 };
 
 export default CreateTest;

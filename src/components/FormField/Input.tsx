@@ -19,17 +19,15 @@ export const Input = <T extends Record<string, any>>({
   className,
   label,
 }: Props<T>) => {
-  const defaultClassName = cn(
-    'border border-1 border-black p-2 pl-4 rounded',
-    className
-  );
-
   return (
     <div className='flex flex-col gap-2'>
       {label && <span className='text-lg text-left'>{label}</span>}
       <input
         {...register(name, { required })}
-        className={defaultClassName}
+        className={cn(
+          'border border-1 border-black p-2 pl-4 rounded',
+          className
+        )}
         placeholder={placeholder}
       />
     </div>

@@ -66,7 +66,7 @@ const GradeStep: FC<Props> = ({ setCurrentStep }) => {
   };
 
   return (
-    <form id='example' onSubmit={handleSubmit(onSubmit)} className='h-full'>
+    <form id='example' onSubmit={handleSubmit(onSubmit)} className='mt-6'>
       {fields.map(({ id, placeholder }, index) => (
         <div key={id} className='flex w-full'>
           <div className='w-full p-5 border-r-2 border-black'>

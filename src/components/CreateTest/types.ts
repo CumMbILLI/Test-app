@@ -1,5 +1,5 @@
 export interface NameStepFields {
-  nameTest: string;
+  testName: string;
 }
 
 export interface QuestionsStepFields {
