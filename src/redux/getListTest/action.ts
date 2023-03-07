@@ -1,24 +1,28 @@
 import { AxiosError } from 'axios';
 import { Dispatch } from 'redux';
 import { instance } from 'services/axios';
-import { ActionListType, FetchListTypes, TestItems } from './types';
+import {
+  ActionListType,
+  FetchListTypes,
+  TestItems,
+  FetchListAction,
+  FetchListSuccess,
+  FetchListError,
+} from './types';
 
-const fetchList = () =>
-  ({
-    type: FetchListTypes.FETCH_LIST,
-  } as ActionListType);
+const fetchList = (): FetchListAction => ({
+  type: FetchListTypes.FETCH_LIST,
+});
 
-const fetchListSuccess = (data: TestItems[]) =>
-  ({
-    type: FetchListTypes.FETCH_LIST_SUCCESS,
-    payload: data,
-  } as ActionListType);
+const fetchListSuccess = (data: TestItems[]): FetchListSuccess => ({
+  type: FetchListTypes.FETCH_LIST_SUCCESS,
+  payload: data,
+});
 
-const fetchListError = (errorMessage: string) =>
-  ({
-    type: FetchListTypes.FETCH_LIST_ERROR,
-    payload: errorMessage,
-  } as ActionListType);
+const fetchListError = (errorMessage: string): FetchListError => ({
+  type: FetchListTypes.FETCH_LIST_ERROR,
+  payload: errorMessage,
+});
 
 export const getTestAsync = () => {
   return async (dispatch: Dispatch<ActionListType>) => {

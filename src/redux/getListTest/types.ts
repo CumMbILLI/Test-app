@@ -13,12 +13,12 @@ export interface FetchListAction {
   type: FetchListTypes.FETCH_LIST;
 }
 
-interface FetchListSuccess {
+export interface FetchListSuccess {
   type: FetchListTypes.FETCH_LIST_SUCCESS;
   payload: TestItems[];
 }
 
-interface FetchListError {
+export interface FetchListError {
   type: FetchListTypes.FETCH_LIST_ERROR;
   payload: string;
 }
