@@ -9,7 +9,7 @@ const PageWrapper: FC<Props> = ({ children }) => {
   return (
     <div>
       <Header />
-      <div className='px-24'>{children}</div>
+      <div className='h-full w-full'>{children}</div>
     </div>
   );
 };

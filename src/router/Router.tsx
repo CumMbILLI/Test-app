@@ -1,14 +1,21 @@
 import React, { ReactNode } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { PATHNAMES } from 'constants/routes';
+
 import PageWrapper from 'components/Layouts/PageWrapper';
 import AppRoute from './AppRoute';
+import { PATHNAMES } from 'constants/routes';
+
 import Home from 'pages/Home';
+import CreateTest from 'pages/CreateTest';
 
 const layoutRoutes: { element: ReactNode; path: PATHNAMES }[] = [
   {
     element: <Home />,
     path: PATHNAMES.HOME,
+  },
+  {
+    element: <CreateTest />,
+    path: PATHNAMES.CREATE_TEST,
   },
 ];
 
