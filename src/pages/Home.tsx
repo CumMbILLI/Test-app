@@ -13,8 +13,8 @@ const Home = () => {
   }, [dispatch]);
 
   return (
-    <div className='text-3xl text-center'>
-      <div className='grid py-20 border-b-2 border-black'>
+    <div className='text-3xl text-center mx-24'>
+      <div className='grid py-10 border-b-2 border-black'>
         <h2>Створити нове тестування</h2>
         <Link
           className='duration-300 opacity-80 hover:opacity-100 text-xl bg-green-500 py-3 w-64 text-white justify-self-center mt-14'
@@ -23,7 +23,7 @@ const Home = () => {
           Почнімо
         </Link>
       </div>
-      <h2 className='mt-6'>Список всіх тестів</h2>
+      <h2 className='mt-10'>Список всіх тестів</h2>
       <TestList />
     </div>
   );

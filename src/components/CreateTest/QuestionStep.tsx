@@ -7,32 +7,27 @@ import AnswersFields from './AnswersFields';
 import { QuestionsStepFields } from './types';
 
 import { ReactComponent as TrashSVG } from 'assets/trash.svg';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { setQuestionsTest } from 'redux/createTest/action';
 
 interface Props {
   setCurrentStep: Dispatch<SetStateAction<number>>;
 }
 
-const INITIAL_VALUES = [
-  {
-    id: 1,
-    image: '',
-    questionTitle: '',
-    correctAnswer: '',
-    answers: ['', '', '', ''],
-  },
-];
-
 const QuestionStep: FC<Props> = ({ setCurrentStep }) => {
+  const dispatch = useAppDispatch();
+  const test = useAppSelector((state) => state.testName);
+
   const { register, control, handleSubmit, setValue } =
     useForm<QuestionsStepFields>({
       defaultValues: {
-        question: INITIAL_VALUES,
+        questionsTest: test.questionsTest,
       },
     });
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'question',
+    name: 'questionsTest',
   });
 
   const createQuestion = () => {
@@ -48,8 +43,7 @@ const QuestionStep: FC<Props> = ({ setCurrentStep }) => {
   const removeQuestion = (index: number) => remove(index);
 
   const onSubmit: SubmitHandler<QuestionsStepFields> = (data) => {
-    //future request
-    console.log(data);
+    dispatch(setQuestionsTest(data));
     setCurrentStep((prev) => ++prev);
   };
 
@@ -74,17 +68,18 @@ const QuestionStep: FC<Props> = ({ setCurrentStep }) => {
             <div className='flex justify-center my-5'>
               <Upload
                 className='!w-72 !h-36'
-                name={`question.${index}.image`}
+                name={`questionsTest.${index}.image`}
                 setValue={setValue}
               />
             </div>
             <Input
               placeholder='Питання'
               register={register}
-              name={`question.${index}.questionTitle`}
+              name={`questionsTest.${index}.questionTitle`}
             />
             <div className='grid gap-3 m-5'>
               <AnswersFields
+                name='questionsTest'
                 register={register}
                 index={index}
                 answers={answers}

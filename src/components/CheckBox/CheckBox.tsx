@@ -34,7 +34,7 @@ const CheckBox = <T extends Record<string, any>>({
         value={value}
         {...register(name as Path<T>)}
         type='checkbox'
-        className={cn('cursor-pointer w-full h-full', className)}
+        className={cn('cursor-pointer w-4 h-4', className)}
       />
     );
   }

@@ -6,12 +6,14 @@ import RadioButton from 'components/FormField/RadioButton';
 import { Input } from 'components/FormField/Input';
 
 interface Props<T extends Record<string, any>> {
+  name: Path<T>;
   register: UseFormRegister<T>;
   index: number;
   answers?: string[];
 }
 
 const AnswerField = <T extends Record<string, any>>({
+  name,
   register,
   index,
   answers,
@@ -23,18 +25,18 @@ const AnswerField = <T extends Record<string, any>>({
   return (
     <div className='flex flex-col gap-2'>
       {answers?.map((_, _index) => (
-        <div className='flex w-full items-center' key={_index}>
+        <div className='flex w-full items-center last:mb-10' key={_index}>
           <div className='mr-3'>
             {isMultiAnswer ? (
               <CheckBox
                 value={_index}
                 register={register}
-                name={`question.${index}.correctAnswer.${_index}` as Path<T>}
+                name={`${name}.${index}.correctAnswer.${_index}` as Path<T>}
               />
             ) : (
               <RadioButton
                 register={register}
-                name={`question.${index}.correctAnswer` as Path<T>}
+                name={`${name}.${index}.correctAnswer` as Path<T>}
                 value={_index as number}
                 required={true}
               />
@@ -45,7 +47,7 @@ const AnswerField = <T extends Record<string, any>>({
             <Input
               placeholder='Відповідь'
               register={register}
-              name={`question.${index}.answers.${_index}` as Path<T>}
+              name={`${name}.${index}.answers.${_index}` as Path<T>}
               required={true}
             />
           </div>

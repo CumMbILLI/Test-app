@@ -32,9 +32,14 @@ const MOCK_TEST = [
 
 const TestList = () => {
   return (
-    <div className='grid gap-2 mt-10 mx-24'>
+    <div className='grid gap-2 mt-10'>
       {MOCK_TEST.map(({ id, name, completed }, index) => (
-        <TestItem id={id} name={name} completed={completed} index={index} />
+        <TestItem
+          key={index + id}
+          name={name}
+          completed={completed}
+          index={index}
+        />
       ))}
     </div>
   );
