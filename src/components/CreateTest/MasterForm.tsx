@@ -18,14 +18,18 @@ interface Props {
   finaleStep: number;
 }
 
+const BUTTON_TEXT = {
+  DEFAULT: 'Продовжити',
+  FINISH: 'Завершити',
+};
+
 const MasterForm: FC<Props> = ({ fieldsForm, finaleStep }) => {
   const [currentStep, setCurrentStep] = useState(1);
 
-  const nextStep = () => setCurrentStep((prev) => ++prev);
   const prevStep = () => setCurrentStep((prev) => --prev);
 
   return (
-    <div className='flex justify-around mt-5'>
+    <div className='flex justify-between mt-5 mx-24'>
       <div className='w-8'>
         {currentStep > 1 && (
           <ArrowSVG className='cursor-pointer' onClick={prevStep} />
@@ -45,13 +49,17 @@ const MasterForm: FC<Props> = ({ fieldsForm, finaleStep }) => {
           type='submit'
           className='!w-60 h-12 self-center mt-8'
         >
-          Продовжити
+          {currentStep !== finaleStep
+            ? BUTTON_TEXT.DEFAULT
+            : BUTTON_TEXT.FINISH}
         </Button>
       </div>
 
       <div className='w-8'>
         {currentStep < finaleStep && (
-          <ArrowSVG className='rotate-180 cursor-pointer' onClick={nextStep} />
+          <button className='w-full' type='submit' form='example'>
+            <ArrowSVG className='rotate-180 cursor-pointer' />
+          </button>
         )}
       </div>
     </div>

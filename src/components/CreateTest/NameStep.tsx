@@ -4,6 +4,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { Input } from 'components/FormField/Input';
 
 import { NameStepFields } from './types';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { setTestName } from 'redux/createTest/action';
 
 interface Props {
   required?: boolean;
@@ -16,11 +18,17 @@ export const NameStep: FC<Props> = ({
   className,
   setCurrentStep,
 }) => {
-  const { register, handleSubmit } = useForm<NameStepFields>();
+  const dispatch = useAppDispatch();
+  const test = useAppSelector((state) => state.testName);
+
+  const { register, handleSubmit } = useForm<NameStepFields>({
+    defaultValues: {
+      testName: test.testName,
+    },
+  });
 
   const onSubmit: SubmitHandler<NameStepFields> = (data) => {
-    //future request
-    console.log(data);
+    dispatch(setTestName(data));
     setCurrentStep((prev) => ++prev);
   };
 

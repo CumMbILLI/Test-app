@@ -4,6 +4,7 @@ import MasterForm from 'components/CreateTest/MasterForm';
 import NameStep from 'components/CreateTest/NameStep';
 import GradeStep from 'components/CreateTest/GradeStep';
 import QuestionStep from 'components/CreateTest/QuestionStep';
+import FinishStep from 'components/CreateTest/FinishStep/FinishStep';
 
 const FIELDS_FORM = [
   {
@@ -20,7 +21,7 @@ const FIELDS_FORM = [
   },
   {
     step: 4,
-    component: (props: any) => <div>Finish form</div>,
+    component: (props: any) => <FinishStep />,
   },
 ];
 

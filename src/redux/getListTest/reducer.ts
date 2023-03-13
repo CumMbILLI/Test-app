@@ -2,7 +2,7 @@ import { ActionListType, FetchListTypes, TestsState } from './types';
 
 const initialState: TestsState = {
   loading: true,
-  testList: [],
+  testList: null,
   error: null,
 };
 
