@@ -3,21 +3,24 @@ import { ActionCreateTest, CreateActionTyped, CreateTestState } from './types';
 const INITIAL_GRADE_TEST = [
   {
     id: 1,
-    name: '',
+    gradeName: '',
     placeholder: 'Мудрець',
-    result: ['', ''],
+    from: '',
+    to: '',
   },
   {
     id: 2,
-    name: '',
+    gradeName: '',
     placeholder: 'Знавець',
-    result: ['', ''],
+    from: '',
+    to: '',
   },
   {
     id: 3,
-    name: '',
+    gradeName: '',
     placeholder: 'Невдаха',
-    result: ['', ''],
+    from: '',
+    to: '',
   },
 ];
 

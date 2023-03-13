@@ -67,7 +67,7 @@ const QuestionStep: FC<Props> = ({ setCurrentStep }) => {
             </div>
             <div className='flex justify-center my-5'>
               <Upload
-                className='!w-72 !h-36'
+                className='!w-72 !h-40'
                 name={`questionsTest.${index}.image`}
                 setValue={setValue}
               />

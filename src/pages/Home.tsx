@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
 import { getTestAsync } from 'redux/getListTest/action';
-import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { useAppDispatch } from 'redux/hooks';
 import TestList from 'components/TestList/TestList';
 import { Link } from 'react-router-dom';
 
 const Home = () => {
   const dispatch = useAppDispatch();
-  const testList = useAppSelector((state) => state.tests);
 
   useEffect(() => {
     dispatch(getTestAsync());

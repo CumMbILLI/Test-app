@@ -31,6 +31,6 @@ export interface TestsState {
 
 export interface TestItems {
   id: string;
-  name: string;
+  nameTest: string;
   completed: boolean;
 }

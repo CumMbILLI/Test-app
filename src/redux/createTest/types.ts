@@ -1,8 +1,9 @@
 interface GradeTestItem {
   id: number;
-  name: string;
+  gradeName: string;
   placeholder: string;
-  result: string[];
+  from: string;
+  to: string;
 }
 
 interface QuestionTestItem {

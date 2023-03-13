@@ -36,8 +36,9 @@ const GradeStep: FC<Props> = ({ setCurrentStep }) => {
   const createFieldForm = () =>
     append({
       id: fields.length + 1,
-      name: '',
-      result: [],
+      gradeName: '',
+      from: '',
+      to: '',
       placeholder: 'Назва',
     });
 
@@ -52,7 +53,7 @@ const GradeStep: FC<Props> = ({ setCurrentStep }) => {
           <div className='w-full p-5 border-r-2 border-black flex'>
             <div className='w-full'>
               <Input
-                name={`gradesTest.${index}.name`}
+                name={`gradesTest.${index}.gradeName`}
                 register={register}
                 placeholder={placeholder}
               />
@@ -71,13 +72,13 @@ const GradeStep: FC<Props> = ({ setCurrentStep }) => {
             <Input
               className='w-20'
               register={register}
-              name={`gradesTest.${index}.result.${0}`}
+              name={`gradesTest.${index}.from`}
             />
             <span className='mx-2 text-lg'>до</span>
             <Input
               className='w-20'
               register={register}
-              name={`gradesTest.${index}.result.${1}`}
+              name={`gradesTest.${index}.to`}
             />
           </div>
         </div>

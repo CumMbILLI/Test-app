@@ -20,7 +20,8 @@ export interface GradesFields {
 
 interface GradeItem {
   id: number;
-  name: string;
-  result: string[];
+  gradeName: string;
+  from: string;
+  to: string;
   placeholder?: string;
 }

@@ -1,4 +1,7 @@
+import { AxiosError } from 'axios';
 import { Dispatch } from 'redux';
+import { instance } from 'services/axios';
+import { history } from 'services/history';
 import {
   ActionCreateTest,
   CreateActionTyped,
@@ -8,6 +11,20 @@ import {
   SetQuestionsTest,
   SetTestNameAction,
 } from './types';
+
+export const createTestAsync = (values: any) => {
+  return async (dispatch: Dispatch<any>) => {
+    try {
+      await instance.post('/tests', values);
+
+      history.push('/');
+    } catch (e) {
+      const err = e as AxiosError;
+
+      console.log(err);
+    }
+  };
+};
 
 export const setTestName = (values: NameValuesType) => {
   const action: SetTestNameAction = {

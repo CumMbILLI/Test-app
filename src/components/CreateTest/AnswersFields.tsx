@@ -23,36 +23,38 @@ const AnswerField = <T extends Record<string, any>>({
   const multipleAnswers = () => setIsMultiAnswer((prev) => !prev);
 
   return (
-    <div className='flex flex-col gap-2'>
-      {answers?.map((_, _index) => (
-        <div className='flex w-full items-center last:mb-10' key={_index}>
-          <div className='mr-3'>
-            {isMultiAnswer ? (
-              <CheckBox
-                value={_index}
+    <div>
+      <div className='flex flex-col gap-2 mb-6'>
+        {answers?.map((_, _index) => (
+          <div className='flex w-full items-center' key={_index}>
+            <div className='mr-3'>
+              {isMultiAnswer ? (
+                <CheckBox
+                  value={_index}
+                  register={register}
+                  name={`${name}.${index}.correctAnswer.${_index}` as Path<T>}
+                />
+              ) : (
+                <RadioButton
+                  register={register}
+                  name={`${name}.${index}.correctAnswer` as Path<T>}
+                  value={_index as number}
+                  required={true}
+                />
+              )}
+            </div>
+
+            <div className='w-full'>
+              <Input
+                placeholder='Відповідь'
                 register={register}
-                name={`${name}.${index}.correctAnswer.${_index}` as Path<T>}
-              />
-            ) : (
-              <RadioButton
-                register={register}
-                name={`${name}.${index}.correctAnswer` as Path<T>}
-                value={_index as number}
+                name={`${name}.${index}.answers.${_index}` as Path<T>}
                 required={true}
               />
-            )}
+            </div>
           </div>
-
-          <div className='w-full'>
-            <Input
-              placeholder='Відповідь'
-              register={register}
-              name={`${name}.${index}.answers.${_index}` as Path<T>}
-              required={true}
-            />
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
       <CheckBox onChange={multipleAnswers} label='Декілька відповідей.' />
     </div>
   );

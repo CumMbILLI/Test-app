@@ -1,42 +1,19 @@
 import React from 'react';
+import { useAppSelector } from 'redux/hooks';
 
 import TestItem from './TestItem';
 
-const MOCK_TEST = [
-  {
-    id: 1,
-    name: 'Хто ти із Наруто?',
-    completed: false,
-  },
-  {
-    id: 2,
-    name: 'Хто ти із Боку но Пику?',
-    completed: false,
-  },
-  {
-    id: 3,
-    name: 'Хто ти із трансендеров?',
-    completed: false,
-  },
-  {
-    id: 4,
-    name: 'Хто ти?',
-    completed: true,
-  },
-  {
-    id: 5,
-    name: 'А я хто?',
-    completed: false,
-  },
-];
-
 const TestList = () => {
+  const testList = useAppSelector((state) => state.tests.testList);
+
+  console.log(testList);
+
   return (
     <div className='grid gap-2 mt-10'>
-      {MOCK_TEST.map(({ id, name, completed }, index) => (
+      {testList?.map(({ id, nameTest, completed }, index) => (
         <TestItem
           key={index + id}
-          name={name}
+          name={nameTest}
           completed={completed}
           index={index}
         />
