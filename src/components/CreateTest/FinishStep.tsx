@@ -1,3 +1,4 @@
+import Button from 'components/Button/Button';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { createTestAsync } from 'redux/createTest/action';
@@ -22,12 +23,11 @@ const FinishStep = () => {
   };
 
   return (
-    <form
-      className='text-xl mt-8'
-      id='example'
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <span>Бажаєте завершити створення тестування?</span>
+    <form className='text-xl mt-8' onSubmit={handleSubmit(onSubmit)}>
+      <p>Бажаєте завершити створення тестування?</p>
+      <Button color='primary' type='submit' className='w-60 h-12 mt-8'>
+        Завершити
+      </Button>
     </form>
   );
 };

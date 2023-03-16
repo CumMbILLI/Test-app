@@ -1,9 +1,7 @@
 import React, { FC, SetStateAction, useState } from 'react';
 import { useAppDispatch } from 'redux/hooks';
 
-import Button from 'components/Button/Button';
 import FormSteps from 'components/FormSteps/FormSteps';
-import { history } from 'services/history';
 import { cancelCreateTest } from 'redux/createTest/action';
 
 import { ReactComponent as ArrowSVG } from 'assets/arrow.svg';
@@ -23,11 +21,6 @@ interface Props {
   finalStep: number;
 }
 
-const BUTTON_TEXT = {
-  DEFAULT: 'Продовжити',
-  FINISH: 'Завершити',
-};
-
 const MasterForm: FC<Props> = ({ fieldsForm, finalStep }) => {
   const dispatch = useAppDispatch();
 
@@ -35,10 +28,7 @@ const MasterForm: FC<Props> = ({ fieldsForm, finalStep }) => {
 
   const prevStep = () => setCurrentStep((prev) => --prev);
 
-  const clickCancel = () => {
-    dispatch(cancelCreateTest());
-    history.push('/');
-  };
+  const clickCancel = () => dispatch(cancelCreateTest());
 
   return (
     <div className='flex justify-between mt-10 mx-24'>
@@ -56,14 +46,6 @@ const MasterForm: FC<Props> = ({ fieldsForm, finalStep }) => {
             <Component key={step} setCurrentStep={setCurrentStep} />
           ) : null
         )}
-        <Button
-          color='primary'
-          form='example'
-          type='submit'
-          className='!w-60 h-12 self-center mt-8'
-        >
-          {currentStep !== finalStep ? BUTTON_TEXT.DEFAULT : BUTTON_TEXT.FINISH}
-        </Button>
       </div>
 
       <div className='w-8'>

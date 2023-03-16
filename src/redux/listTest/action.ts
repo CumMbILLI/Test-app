@@ -47,7 +47,9 @@ export const removeTestItem = (id: string) => {
 
       dispatch(getTestAsync());
     } catch (e) {
-      console.log(e);
+      const err = e as AxiosError;
+
+      console.log(err);
     }
   };
 };

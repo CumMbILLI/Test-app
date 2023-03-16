@@ -21,8 +21,6 @@ const AnswerField = <T extends Record<string, any>>({
   errors,
   defaultValueRadio,
 }: Props<T>) => {
-  console.log();
-
   return (
     <div className='flex flex-col gap-2'>
       {answers?.map((_, _index) => (

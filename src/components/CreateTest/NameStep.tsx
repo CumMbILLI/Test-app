@@ -8,6 +8,7 @@ import { Input } from 'components/FormField/Input';
 import { NameStepFields } from './types';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { setTestName } from 'redux/createTest/action';
+import Button from 'components/Button/Button';
 
 interface Props {
   required?: boolean;
@@ -55,6 +56,10 @@ export const NameStep: FC<Props> = ({
         register={register}
         required={required}
       />
+
+      <Button color='primary' type='submit' className='w-60 h-12 mt-8'>
+        Продовжити
+      </Button>
     </form>
   );
 };

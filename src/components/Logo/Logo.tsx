@@ -1,9 +1,14 @@
 import React from 'react';
+
+import { useAppDispatch } from 'redux/hooks';
+import { cancelCreateTest } from 'redux/createTest/action';
+
 import { ReactComponent as CapSVG } from 'assets/cap.svg';
-import { history } from 'services/history';
 
 const Logo = () => {
-  const clickLogo = () => history.push('/');
+  const dispatch = useAppDispatch();
+
+  const clickLogo = () => dispatch(cancelCreateTest());
 
   return (
     <div

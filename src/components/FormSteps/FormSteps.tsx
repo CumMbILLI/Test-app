@@ -18,7 +18,7 @@ const FormSteps: FC<Props> = ({ finalStep, currentStep }) => {
   const stepArray = arrayRange(1, finalStep, 1);
 
   return (
-    <div className='flex justify-center mb-10'>
+    <div className='w-full flex justify-center mb-10'>
       {stepArray.map((value) => (
         <div
           className={cn('w-full flex items-center', {

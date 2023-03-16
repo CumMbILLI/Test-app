@@ -31,8 +31,6 @@ export const createTestAsync = (values: any) => {
 };
 
 export const setTestName = (values: NameValuesType) => {
-  console.log(values);
-
   const action: SetTestNameAction = {
     type: CreateActionTyped.SET_TEST_NAME,
     values,
@@ -42,8 +40,6 @@ export const setTestName = (values: NameValuesType) => {
 };
 
 export const setGradeTest = (values: GradesValuesType) => {
-  console.log(values);
-
   const action: SetGradesTestAction = {
     type: CreateActionTyped.SET_GRADES_TEST,
     values,
@@ -62,9 +58,17 @@ export const setQuestionsTest = (values: QuestionsValuesType) => {
 };
 
 export const cancelCreateTest = () => {
-  const action: CancelCreateTest = {
-    type: CreateActionTyped.CLEAR_STATE_TEST,
-  };
+  const isCancel = window.confirm('Бажаєте вийти?\n(Дані будуть втрачені)');
 
-  return (dispatch: Dispatch<ActionCreateTest>) => dispatch(action);
+  if (isCancel) {
+    const action: CancelCreateTest = {
+      type: CreateActionTyped.CLEAR_STATE_TEST,
+    };
+
+    history.push('/');
+
+    return (dispatch: Dispatch<ActionCreateTest>) => dispatch(action);
+  }
+
+  return null;
 };

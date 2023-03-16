@@ -9,6 +9,7 @@ import { ReactComponent as TrashSVG } from 'assets/trash.svg';
 import { GradesFields } from './types';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { setGradeTest } from 'redux/createTest/action';
+import Button from 'components/Button/Button';
 
 interface Props {
   setCurrentStep: Dispatch<SetStateAction<number>>;
@@ -41,8 +42,6 @@ const GradeStep: FC<Props> = ({ setCurrentStep }) => {
       gradesTest: test.gradesTest,
     },
   });
-
-  console.log(errors);
 
   const { remove, fields, append } = useFieldArray({
     control,
@@ -114,10 +113,14 @@ const GradeStep: FC<Props> = ({ setCurrentStep }) => {
 
       <span
         onClick={createFieldForm}
-        className='text-base bg-transparent duration-300 font-bold cursor-pointer text-blue-500/80 hover:text-blue-500/100'
+        className='block text-base bg-transparent duration-300 font-bold cursor-pointer text-blue-500/80 hover:text-blue-500/100'
       >
         + Створити
       </span>
+
+      <Button color='primary' type='submit' className='w-60 h-12 mt-8'>
+        Продовжити
+      </Button>
     </form>
   );
 };

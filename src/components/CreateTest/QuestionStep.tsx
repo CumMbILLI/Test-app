@@ -11,6 +11,7 @@ import { QuestionsStepFields } from './types';
 import { ReactComponent as TrashSVG } from 'assets/trash.svg';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { setQuestionsTest } from 'redux/createTest/action';
+import Button from 'components/Button/Button';
 
 interface Props {
   setCurrentStep: Dispatch<SetStateAction<number>>;
@@ -68,14 +69,10 @@ const QuestionStep: FC<Props> = ({ setCurrentStep }) => {
   };
 
   return (
-    <div className='bg-gray-300 mt-10 p-5'>
-      <form
-        id='example'
-        className='grid gap-4'
-        onSubmit={handleSubmit(onSubmit)}
-      >
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className='bg-gray-200 mt-10 p-5 grid gap-4'>
         {fields.map(({ id, answers, image, correctAnswer }, index) => (
-          <div key={id} className='border-2 px-5 '>
+          <div key={id} className='border-2 border-gray-100 px-5 '>
             <div className='flex text-xl mt-5 px-5'>
               <span className='w-full text-center'>Питання {index + 1}</span>
               {fields.length > 1 && (
@@ -122,8 +119,11 @@ const QuestionStep: FC<Props> = ({ setCurrentStep }) => {
             + Створити
           </span>
         </div>
-      </form>
-    </div>
+      </div>
+      <Button color='primary' type='submit' className='w-60 h-12 mt-8'>
+        Продовжити
+      </Button>
+    </form>
   );
 };
 
