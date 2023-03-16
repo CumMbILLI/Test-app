@@ -39,3 +39,15 @@ export const getTestAsync = () => {
     }
   };
 };
+
+export const removeTestItem = (id: string) => {
+  return async (dispatch: Dispatch<any>) => {
+    try {
+      await instance.delete(`/tests/${id}`);
+
+      dispatch(getTestAsync());
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};

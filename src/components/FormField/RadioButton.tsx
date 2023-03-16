@@ -6,7 +6,8 @@ interface Props<T extends Record<string, any>> {
   register: UseFormRegister<T>;
   required?: boolean;
   className?: string;
-  value: number;
+  value: string;
+  defaultValue: string;
 }
 
 const RadioButton = <T extends Record<string, any>>({
@@ -15,9 +16,11 @@ const RadioButton = <T extends Record<string, any>>({
   register,
   required,
   className,
+  defaultValue,
 }: Props<T>) => {
   return (
     <input
+      defaultChecked={defaultValue === value ? true : false}
       className={className}
       {...register(name, { required })}
       type='radio'

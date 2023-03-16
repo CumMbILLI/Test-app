@@ -1,10 +1,10 @@
 import React from 'react';
 
-import MasterForm from 'components/CreateTest/MasterForm';
+import MasterForm from 'components/MasterForm/MasterForm';
 import NameStep from 'components/CreateTest/NameStep';
 import GradeStep from 'components/CreateTest/GradeStep';
 import QuestionStep from 'components/CreateTest/QuestionStep';
-import FinishStep from 'components/CreateTest/FinishStep/FinishStep';
+import FinishStep from 'components/CreateTest/FinishStep';
 
 const FIELDS_FORM = [
   {
@@ -26,7 +26,7 @@ const FIELDS_FORM = [
 ];
 
 const CreateTest = () => {
-  return <MasterForm finaleStep={4} fieldsForm={FIELDS_FORM} />;
+  return <MasterForm finalStep={4} fieldsForm={FIELDS_FORM} />;
 };
 
 export default CreateTest;

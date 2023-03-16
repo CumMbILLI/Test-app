@@ -7,7 +7,6 @@ import { ReactComponent as DoneSVG } from 'assets/done.svg';
 interface Props<T extends Record<string, any>> {
   className?: string;
   label?: string;
-  value?: number | string;
   name?: Path<T>;
   register?: UseFormRegister<T>;
   onChange?: VoidFunction;
@@ -19,7 +18,6 @@ const CheckBox = <T extends Record<string, any>>({
   onChange,
   register,
   name,
-  value,
 }: Props<T>) => {
   const [checked, setChecked] = useState(false);
 
@@ -31,7 +29,6 @@ const CheckBox = <T extends Record<string, any>>({
   if (register) {
     return (
       <input
-        value={value}
         {...register(name as Path<T>)}
         type='checkbox'
         className={cn('cursor-pointer w-4 h-4', className)}

@@ -4,7 +4,9 @@ import { instance } from 'services/axios';
 import { history } from 'services/history';
 import {
   ActionCreateTest,
+  CancelCreateTest,
   CreateActionTyped,
+  GradesValuesType,
   NameValuesType,
   QuestionsValuesType,
   SetGradesTestAction,
@@ -13,9 +15,11 @@ import {
 } from './types';
 
 export const createTestAsync = (values: any) => {
-  return async (dispatch: Dispatch<any>) => {
+  return async (dispatch: Dispatch<ActionCreateTest>) => {
     try {
       await instance.post('/tests', values);
+
+      dispatch({ type: CreateActionTyped.CLEAR_STATE_TEST });
 
       history.push('/');
     } catch (e) {
@@ -27,6 +31,8 @@ export const createTestAsync = (values: any) => {
 };
 
 export const setTestName = (values: NameValuesType) => {
+  console.log(values);
+
   const action: SetTestNameAction = {
     type: CreateActionTyped.SET_TEST_NAME,
     values,
@@ -35,7 +41,9 @@ export const setTestName = (values: NameValuesType) => {
   return (dispatch: Dispatch<ActionCreateTest>) => dispatch(action);
 };
 
-export const setGradeTest = (values: any) => {
+export const setGradeTest = (values: GradesValuesType) => {
+  console.log(values);
+
   const action: SetGradesTestAction = {
     type: CreateActionTyped.SET_GRADES_TEST,
     values,
@@ -48,6 +56,14 @@ export const setQuestionsTest = (values: QuestionsValuesType) => {
   const action: SetQuestionsTest = {
     type: CreateActionTyped.SET_QUESTIONS_TEST,
     values,
+  };
+
+  return (dispatch: Dispatch<ActionCreateTest>) => dispatch(action);
+};
+
+export const cancelCreateTest = () => {
+  const action: CancelCreateTest = {
+    type: CreateActionTyped.CLEAR_STATE_TEST,
   };
 
   return (dispatch: Dispatch<ActionCreateTest>) => dispatch(action);

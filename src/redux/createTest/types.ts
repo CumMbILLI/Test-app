@@ -1,7 +1,7 @@
 interface GradeTestItem {
   id: number;
   gradeName: string;
-  placeholder: string;
+  placeholder?: string;
   from: string;
   to: string;
 }
@@ -10,7 +10,7 @@ interface QuestionTestItem {
   id: number;
   image?: string;
   questionTitle: string;
-  correctAnswer: string | string[];
+  correctAnswer: string;
   answers: string[];
 }
 
@@ -24,6 +24,7 @@ export enum CreateActionTyped {
   SET_TEST_NAME = 'setNameTest',
   SET_GRADES_TEST = 'setGradesTest',
   SET_QUESTIONS_TEST = 'setQuestionsTest',
+  CLEAR_STATE_TEST = 'clearStateTest',
 }
 
 export interface NameValuesType {
@@ -53,7 +54,12 @@ export interface SetQuestionsTest {
   values: QuestionsValuesType;
 }
 
+export interface CancelCreateTest {
+  type: CreateActionTyped.CLEAR_STATE_TEST;
+}
+
 export type ActionCreateTest =
   | SetTestNameAction
   | SetGradesTestAction
-  | SetQuestionsTest;
+  | SetQuestionsTest
+  | CancelCreateTest;

@@ -10,7 +10,7 @@ interface QuestionItem {
   id: number;
   image?: string;
   questionTitle: string;
-  correctAnswer: string | string[];
+  correctAnswer: string;
   answers: string[];
 }
 

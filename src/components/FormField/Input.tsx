@@ -9,6 +9,7 @@ interface Props<T extends Record<string, any>> {
   required?: boolean;
   className?: string;
   label?: string;
+  isError?: boolean;
 }
 
 export const Input = <T extends Record<string, any>>({
@@ -18,6 +19,7 @@ export const Input = <T extends Record<string, any>>({
   required = false,
   className,
   label,
+  isError = false,
 }: Props<T>) => {
   return (
     <div className='flex flex-col gap-2'>
@@ -26,7 +28,10 @@ export const Input = <T extends Record<string, any>>({
         {...register(name, { required })}
         className={cn(
           'border border-1 border-black p-2 pl-4 rounded',
-          className
+          className,
+          {
+            'border-red-500': isError,
+          }
         )}
         placeholder={placeholder}
       />

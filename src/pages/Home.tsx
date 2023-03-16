@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { getTestAsync } from 'redux/getListTest/action';
+import { getTestAsync } from 'redux/listTest/action';
 import { useAppDispatch } from 'redux/hooks';
 import TestList from 'components/TestList/TestList';
 import { Link } from 'react-router-dom';

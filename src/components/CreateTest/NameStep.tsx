@@ -1,4 +1,6 @@
 import React, { Dispatch, FC, SetStateAction } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { Input } from 'components/FormField/Input';
@@ -14,27 +16,40 @@ interface Props {
 }
 
 export const NameStep: FC<Props> = ({
-  required = false,
+  required = true,
   className,
   setCurrentStep,
 }) => {
   const dispatch = useAppDispatch();
   const test = useAppSelector((state) => state.testName);
 
-  const { register, handleSubmit } = useForm<NameStepFields>({
+  const validationSchema = yup.object().shape({
+    testName: yup.string().required(),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<NameStepFields>({
+    resolver: yupResolver(validationSchema),
     defaultValues: {
       testName: test.testName,
     },
   });
 
-  const onSubmit: SubmitHandler<NameStepFields> = (data) => {
+  const isError = Boolean(errors.testName?.message);
+
+  const onSubmit: SubmitHandler<NameStepFields> = async (data) => {
     dispatch(setTestName(data));
+
     setCurrentStep((prev) => ++prev);
   };
 
   return (
     <form id='example' className={className} onSubmit={handleSubmit(onSubmit)}>
       <Input
+        isError={isError}
         label='Назва тесту'
         name='testName'
         register={register}

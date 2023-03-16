@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Path, UseFormRegister } from 'react-hook-form';
 
-import CheckBox from 'components/CheckBox/CheckBox';
 import RadioButton from 'components/FormField/RadioButton';
 import { Input } from 'components/FormField/Input';
 
@@ -10,6 +9,8 @@ interface Props<T extends Record<string, any>> {
   register: UseFormRegister<T>;
   index: number;
   answers?: string[];
+  errors?: any;
+  defaultValueRadio: string;
 }
 
 const AnswerField = <T extends Record<string, any>>({
@@ -17,45 +18,36 @@ const AnswerField = <T extends Record<string, any>>({
   register,
   index,
   answers,
+  errors,
+  defaultValueRadio,
 }: Props<T>) => {
-  const [isMultiAnswer, setIsMultiAnswer] = useState(false);
-
-  const multipleAnswers = () => setIsMultiAnswer((prev) => !prev);
+  console.log();
 
   return (
-    <div>
-      <div className='flex flex-col gap-2 mb-6'>
-        {answers?.map((_, _index) => (
-          <div className='flex w-full items-center' key={_index}>
-            <div className='mr-3'>
-              {isMultiAnswer ? (
-                <CheckBox
-                  value={_index}
-                  register={register}
-                  name={`${name}.${index}.correctAnswer.${_index}` as Path<T>}
-                />
-              ) : (
-                <RadioButton
-                  register={register}
-                  name={`${name}.${index}.correctAnswer` as Path<T>}
-                  value={_index as number}
-                  required={true}
-                />
-              )}
-            </div>
-
-            <div className='w-full'>
-              <Input
-                placeholder='Відповідь'
-                register={register}
-                name={`${name}.${index}.answers.${_index}` as Path<T>}
-                required={true}
-              />
-            </div>
+    <div className='flex flex-col gap-2'>
+      {answers?.map((_, _index) => (
+        <div className='flex w-full items-center' key={_index}>
+          <div className='mr-3'>
+            <RadioButton
+              defaultValue={defaultValueRadio}
+              register={register}
+              name={`${name}.correctAnswer` as Path<T>}
+              value={`${_index}`}
+            />
           </div>
-        ))}
-      </div>
-      <CheckBox onChange={multipleAnswers} label='Декілька відповідей.' />
+
+          <div className='w-full'>
+            <Input
+              isError={Boolean(
+                errors?.questionsTest?.[index]?.answers?.[_index]?.message
+              )}
+              placeholder='Відповідь'
+              register={register}
+              name={`${name}.answers.${_index}` as Path<T>}
+            />
+          </div>
+        </div>
+      ))}
     </div>
   );
 };

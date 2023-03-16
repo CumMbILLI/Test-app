@@ -1,20 +1,15 @@
 import React, { ChangeEvent, useState } from 'react';
 import cn from 'classnames';
-import {
-  Path,
-  PathValue,
-  UseFormRegister,
-  UseFormSetValue,
-} from 'react-hook-form';
+import { Path, PathValue, UseFormSetValue } from 'react-hook-form';
 import { ReactComponent as DownloadSVG } from 'assets/download.svg';
 import { ReactComponent as CloseSVG } from 'assets/close.svg';
 
 interface Props<T extends Record<string, any>> {
   name: Path<T>;
   setValue: UseFormSetValue<T>;
-  register?: UseFormRegister<T>;
   placeholder?: string;
   className?: string;
+  imageState?: string;
 }
 
 const Upload = <T extends Record<string, any>>({
@@ -22,8 +17,9 @@ const Upload = <T extends Record<string, any>>({
   placeholder = 'Виберіть файл',
   setValue,
   className,
+  imageState = '',
 }: Props<T>) => {
-  const [imageURL, setImageURL] = useState<string | null>(null);
+  const [imageURL, setImageURL] = useState<string | undefined>(imageState);
 
   const fileBase64 = (file: File): Promise<string> => {
     return new Promise<string>((resolve, reject) => {

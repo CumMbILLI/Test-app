@@ -1,4 +1,6 @@
 import React, { Dispatch, FC, SetStateAction } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
 
 import Upload from 'components/FormField/Upload';
@@ -18,12 +20,30 @@ const QuestionStep: FC<Props> = ({ setCurrentStep }) => {
   const dispatch = useAppDispatch();
   const test = useAppSelector((state) => state.testName);
 
-  const { register, control, handleSubmit, setValue } =
-    useForm<QuestionsStepFields>({
-      defaultValues: {
-        questionsTest: test.questionsTest,
-      },
-    });
+  const validationSchema = yup.object().shape({
+    questionsTest: yup.array().of(
+      yup.object().shape({
+        id: yup.number(),
+        image: yup.string(),
+        questionTitle: yup.string().required(),
+        correctAnswer: yup.string().required(),
+        answers: yup.array().of(yup.string().required()),
+      })
+    ),
+  });
+
+  const {
+    register,
+    control,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<QuestionsStepFields>({
+    resolver: yupResolver(validationSchema),
+    defaultValues: {
+      questionsTest: test.questionsTest,
+    },
+  });
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -35,14 +55,14 @@ const QuestionStep: FC<Props> = ({ setCurrentStep }) => {
       id: fields.length + 1,
       image: '',
       questionTitle: '',
-      correctAnswer: '',
+      correctAnswer: '0',
       answers: ['', '', '', ''],
     });
   };
 
   const removeQuestion = (index: number) => remove(index);
 
-  const onSubmit: SubmitHandler<QuestionsStepFields> = (data) => {
+  const onSubmit: SubmitHandler<QuestionsStepFields> = async (data) => {
     dispatch(setQuestionsTest(data));
     setCurrentStep((prev) => ++prev);
   };
@@ -54,7 +74,7 @@ const QuestionStep: FC<Props> = ({ setCurrentStep }) => {
         className='grid gap-4'
         onSubmit={handleSubmit(onSubmit)}
       >
-        {fields.map(({ id, answers }, index) => (
+        {fields.map(({ id, answers, image, correctAnswer }, index) => (
           <div key={id} className='border-2 px-5 '>
             <div className='flex text-xl mt-5 px-5'>
               <span className='w-full text-center'>Питання {index + 1}</span>
@@ -67,22 +87,28 @@ const QuestionStep: FC<Props> = ({ setCurrentStep }) => {
             </div>
             <div className='flex justify-center my-5'>
               <Upload
+                imageState={image}
                 className='!w-72 !h-40'
                 name={`questionsTest.${index}.image`}
                 setValue={setValue}
               />
             </div>
             <Input
+              isError={Boolean(
+                errors?.questionsTest?.[index]?.questionTitle?.message
+              )}
               placeholder='Питання'
               register={register}
               name={`questionsTest.${index}.questionTitle`}
             />
             <div className='grid gap-3 m-5'>
               <AnswersFields
-                name='questionsTest'
-                register={register}
+                defaultValueRadio={correctAnswer}
+                name={`questionsTest.${index}`}
                 index={index}
+                register={register}
                 answers={answers}
+                errors={errors}
               />
             </div>
           </div>

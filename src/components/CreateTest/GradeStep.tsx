@@ -1,4 +1,6 @@
 import React, { Dispatch, FC, SetStateAction } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
 
 import { Input } from 'components/FormField/Input';
@@ -16,17 +18,38 @@ const GradeStep: FC<Props> = ({ setCurrentStep }) => {
   const dispatch = useAppDispatch();
   const test = useAppSelector((state) => state.testName);
 
-  const { register, control, handleSubmit } = useForm<GradesFields>({
+  const validationSchema = yup.object().shape({
+    gradesTest: yup.array().of(
+      yup.object().shape({
+        id: yup.number(),
+        placeholder: yup.string(),
+        gradeName: yup.string().required(),
+        from: yup.string().required(),
+        to: yup.string().required(),
+      })
+    ),
+  });
+
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<GradesFields>({
+    resolver: yupResolver(validationSchema),
     defaultValues: {
       gradesTest: test.gradesTest,
     },
   });
+
+  console.log(errors);
+
   const { remove, fields, append } = useFieldArray({
     control,
     name: 'gradesTest',
   });
 
-  const onSubmit: SubmitHandler<GradesFields> = (data) => {
+  const onSubmit: SubmitHandler<GradesFields> = async (data) => {
     dispatch(setGradeTest(data));
     setCurrentStep((prev) => ++prev);
   };
@@ -53,6 +76,9 @@ const GradeStep: FC<Props> = ({ setCurrentStep }) => {
           <div className='w-full p-5 border-r-2 border-black flex'>
             <div className='w-full'>
               <Input
+                isError={Boolean(
+                  errors.gradesTest?.[index]?.gradeName?.message
+                )}
                 name={`gradesTest.${index}.gradeName`}
                 register={register}
                 placeholder={placeholder}
@@ -70,12 +96,14 @@ const GradeStep: FC<Props> = ({ setCurrentStep }) => {
           <div className='w-1/2 h-max p-5 flex items-center justify-center'>
             <span className='mx-2 text-lg'>від</span>
             <Input
+              isError={Boolean(errors.gradesTest?.[index]?.from?.message)}
               className='w-20'
               register={register}
               name={`gradesTest.${index}.from`}
             />
             <span className='mx-2 text-lg'>до</span>
             <Input
+              isError={Boolean(errors.gradesTest?.[index]?.to?.message)}
               className='w-20'
               register={register}
               name={`gradesTest.${index}.to`}
