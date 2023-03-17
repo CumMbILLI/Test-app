@@ -8,11 +8,8 @@ import { ReactComponent as CapSVG } from 'assets/cap.svg';
 const Logo = () => {
   const dispatch = useAppDispatch();
 
-  const handleLogo = () => {
-    const isCancel = window.confirm('Бажаєте вийти?\n(Дані будуть втрачені)');
+  const handleLogo = () => dispatch(cancelTestCreation());
 
-    if (isCancel) dispatch(cancelTestCreation());
-  };
   return (
     <div
       onClick={handleLogo}

@@ -4,17 +4,54 @@ import { instance } from 'services/axios';
 import {
   ActionListType,
   FetchListTypes,
-  TestItems,
+  TestItem,
   FetchListAction,
   FetchListSuccess,
   FetchListError,
+  FetchItemTypes,
+  ActionItemType,
+  FetchItemAction,
+  FetchItemSuccess,
+  FetchItemError,
 } from './types';
+
+const fetchItem = (): FetchItemAction => ({
+  type: FetchItemTypes.FETCH_ITEM,
+});
+
+const fetchItemSuccess = (data: TestItem[]): FetchItemSuccess => ({
+  type: FetchItemTypes.FETCH_ITEM_SUCCESS,
+  payload: data,
+});
+
+const fetchItemError = (errorMessage: string): FetchItemError => ({
+  type: FetchItemTypes.FETCH_ITEM_ERROR,
+  payload: errorMessage,
+});
+
+export const getTestByIdAsync = (id: string) => {
+  return async (dispatch: Dispatch<ActionItemType>) => {
+    try {
+      dispatch(fetchItem());
+
+      const { data } = await instance.get(`/tests?id=${id}`);
+
+      dispatch(fetchItemSuccess(data));
+    } catch (e) {
+      const err = e as AxiosError;
+
+      console.log(err);
+
+      dispatch(fetchItemError(err.message));
+    }
+  };
+};
 
 const fetchList = (): FetchListAction => ({
   type: FetchListTypes.FETCH_LIST,
 });
 
-const fetchListSuccess = (data: TestItems[]): FetchListSuccess => ({
+const fetchListSuccess = (data: TestItem[]): FetchListSuccess => ({
   type: FetchListTypes.FETCH_LIST_SUCCESS,
   payload: data,
 });

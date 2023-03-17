@@ -1,18 +1,4 @@
-interface GradeTestItem {
-  id: number;
-  gradeName: string;
-  placeholder?: string;
-  from: string;
-  to: string;
-}
-
-interface QuestionTestItem {
-  id: number;
-  image?: string;
-  questionTitle: string;
-  correctAnswer: string;
-  answers: string[];
-}
+import { GradeTestItem, QuestionTestItem } from 'redux/types';
 
 export interface CreateTestState {
   testName: string;

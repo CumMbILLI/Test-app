@@ -3,6 +3,7 @@ import { ReactComponent as RemoveSVG } from 'assets/remove.svg';
 import { ReactComponent as CompletedSVG } from 'assets/completed.svg';
 import { useAppDispatch } from 'redux/hooks';
 import { removeTestItem } from 'redux/listTest/action';
+import { history } from 'services/history';
 
 interface Props {
   id: string;
@@ -14,10 +15,17 @@ interface Props {
 const TestItem: FC<Props> = ({ id, index, name, completed }) => {
   const dispatch = useAppDispatch();
 
+  const handleClickItem = (id: string) => () => {
+    history.push(`/passing?id=${id}`);
+  };
+
   const handleRemoveItem = (id: string) => () => dispatch(removeTestItem(id));
 
   return (
-    <div className='border border-1 border-black p-4 text-xl flex items-cente justify-between cursor-pointer'>
+    <div
+      onClick={handleClickItem(id)}
+      className='border border-1 border-black p-4 text-xl flex items-cente justify-between cursor-pointer'
+    >
       <div>
         <span className='text-base pr-5'>{index + 1}.</span>
         <span>{name}</span>
