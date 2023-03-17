@@ -14,9 +14,7 @@ interface Props {
 const TestItem: FC<Props> = ({ id, index, name, completed }) => {
   const dispatch = useAppDispatch();
 
-  const removeItem = (id: string) => () => {
-    dispatch(removeTestItem(id));
-  };
+  const handleRemoveItem = (id: string) => () => dispatch(removeTestItem(id));
 
   return (
     <div className='border border-1 border-black p-4 text-xl flex items-cente justify-between cursor-pointer'>
@@ -27,7 +25,7 @@ const TestItem: FC<Props> = ({ id, index, name, completed }) => {
       <div className='flex items-center'>
         {completed && <CompletedSVG className='mr-8' />}
         <RemoveSVG
-          onClick={removeItem(id)}
+          onClick={handleRemoveItem(id)}
           className='w-5 duration-300 fill-rose-500 opacity-80 hover:opacity-100 cursor-pointer'
         />
       </div>

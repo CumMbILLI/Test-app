@@ -21,7 +21,7 @@ export interface CreateTestState {
 }
 
 export enum CreateActionTyped {
-  SET_TEST_NAME = 'setNameTest',
+  SET_NAME_TEST = 'setNameTest',
   SET_GRADES_TEST = 'setGradesTest',
   SET_QUESTIONS_TEST = 'setQuestionsTest',
   CLEAR_STATE_TEST = 'clearStateTest',
@@ -31,8 +31,8 @@ export interface NameValuesType {
   testName: string;
 }
 
-export interface SetTestNameAction {
-  type: CreateActionTyped.SET_TEST_NAME;
+export interface SetNameTestAction {
+  type: CreateActionTyped.SET_NAME_TEST;
   values: NameValuesType;
 }
 
@@ -59,7 +59,7 @@ export interface CancelCreateTest {
 }
 
 export type ActionCreateTest =
-  | SetTestNameAction
+  | SetNameTestAction
   | SetGradesTestAction
   | SetQuestionsTest
   | CancelCreateTest;

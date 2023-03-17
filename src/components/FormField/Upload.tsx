@@ -9,7 +9,7 @@ interface Props<T extends Record<string, any>> {
   setValue: UseFormSetValue<T>;
   placeholder?: string;
   className?: string;
-  imageState?: string;
+  imageString?: string;
 }
 
 const Upload = <T extends Record<string, any>>({
@@ -17,9 +17,9 @@ const Upload = <T extends Record<string, any>>({
   placeholder = 'Виберіть файл',
   setValue,
   className,
-  imageState = '',
+  imageString,
 }: Props<T>) => {
-  const [imageURL, setImageURL] = useState<string | undefined>(imageState);
+  const [imageURL, setImageURL] = useState<string | undefined>(imageString);
 
   const fileBase64 = (file: File): Promise<string> => {
     return new Promise<string>((resolve, reject) => {

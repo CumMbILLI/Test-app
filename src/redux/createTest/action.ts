@@ -11,15 +11,19 @@ import {
   QuestionsValuesType,
   SetGradesTestAction,
   SetQuestionsTest,
-  SetTestNameAction,
+  SetNameTestAction,
 } from './types';
+
+const actionTypeCancel = (): CancelCreateTest => ({
+  type: CreateActionTyped.CLEAR_STATE_TEST,
+});
 
 export const createTestAsync = (values: any) => {
   return async (dispatch: Dispatch<ActionCreateTest>) => {
     try {
       await instance.post('/tests', values);
 
-      dispatch({ type: CreateActionTyped.CLEAR_STATE_TEST });
+      dispatch(actionTypeCancel());
 
       history.push('/');
     } catch (e) {
@@ -30,9 +34,9 @@ export const createTestAsync = (values: any) => {
   };
 };
 
-export const setTestName = (values: NameValuesType) => {
-  const action: SetTestNameAction = {
-    type: CreateActionTyped.SET_TEST_NAME,
+export const setNameTest = (values: NameValuesType) => {
+  const action: SetNameTestAction = {
+    type: CreateActionTyped.SET_NAME_TEST,
     values,
   };
 
@@ -57,18 +61,12 @@ export const setQuestionsTest = (values: QuestionsValuesType) => {
   return (dispatch: Dispatch<ActionCreateTest>) => dispatch(action);
 };
 
-export const cancelCreateTest = () => {
-  const isCancel = window.confirm('Бажаєте вийти?\n(Дані будуть втрачені)');
+export const cancelTestCreation = () => {
+  const action: CancelCreateTest = {
+    type: CreateActionTyped.CLEAR_STATE_TEST,
+  };
 
-  if (isCancel) {
-    const action: CancelCreateTest = {
-      type: CreateActionTyped.CLEAR_STATE_TEST,
-    };
+  history.push('/');
 
-    history.push('/');
-
-    return (dispatch: Dispatch<ActionCreateTest>) => dispatch(action);
-  }
-
-  return null;
+  return (dispatch: Dispatch<ActionCreateTest>) => dispatch(action);
 };

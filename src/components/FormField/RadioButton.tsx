@@ -20,7 +20,7 @@ const RadioButton = <T extends Record<string, any>>({
 }: Props<T>) => {
   return (
     <input
-      defaultChecked={defaultValue === value ? true : false}
+      defaultChecked={defaultValue === value}
       className={className}
       {...register(name, { required })}
       type='radio'

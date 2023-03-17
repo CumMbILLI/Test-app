@@ -5,7 +5,7 @@ import { getTestsReducer } from './listTest/reducer';
 
 export const rootReducer = combineReducers({
   tests: getTestsReducer,
-  testName: setFieldsReducer,
+  testCreate: setFieldsReducer,
 });
 
 export const store = createStore(rootReducer, applyMiddleware(thunk));

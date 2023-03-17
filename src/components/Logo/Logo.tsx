@@ -1,18 +1,21 @@
 import React from 'react';
 
 import { useAppDispatch } from 'redux/hooks';
-import { cancelCreateTest } from 'redux/createTest/action';
+import { cancelTestCreation } from 'redux/createTest/action';
 
 import { ReactComponent as CapSVG } from 'assets/cap.svg';
 
 const Logo = () => {
   const dispatch = useAppDispatch();
 
-  const clickLogo = () => dispatch(cancelCreateTest());
+  const handleLogo = () => {
+    const isCancel = window.confirm('Бажаєте вийти?\n(Дані будуть втрачені)');
 
+    if (isCancel) dispatch(cancelTestCreation());
+  };
   return (
     <div
-      onClick={clickLogo}
+      onClick={handleLogo}
       className='flex items-center font-bold cursor-pointer select-none'
     >
       <span>Я</span>

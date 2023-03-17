@@ -17,7 +17,7 @@ interface Props {
 
 const GradeStep: FC<Props> = ({ setCurrentStep }) => {
   const dispatch = useAppDispatch();
-  const test = useAppSelector((state) => state.testName);
+  const { gradesTest } = useAppSelector((state) => state.testCreate);
 
   const validationSchema = yup.object().shape({
     gradesTest: yup.array().of(
@@ -39,13 +39,8 @@ const GradeStep: FC<Props> = ({ setCurrentStep }) => {
   } = useForm<GradesFields>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
-      gradesTest: test.gradesTest,
+      gradesTest: gradesTest,
     },
-  });
-
-  const { remove, fields, append } = useFieldArray({
-    control,
-    name: 'gradesTest',
   });
 
   const onSubmit: SubmitHandler<GradesFields> = async (data) => {
@@ -53,23 +48,27 @@ const GradeStep: FC<Props> = ({ setCurrentStep }) => {
     setCurrentStep((prev) => ++prev);
   };
 
-  const isLengthCheck = (index: number) => 3 < index + 1;
+  const { remove, fields, append } = useFieldArray({
+    control,
+    name: 'gradesTest',
+  });
 
-  const createFieldForm = () =>
-    append({
-      id: fields.length + 1,
-      gradeName: '',
-      from: '',
-      to: '',
-      placeholder: 'Назва',
-    });
-
-  const removeField = (_id: number) => {
-    remove(_id);
+  const defaultGradeField = {
+    id: fields.length + 1,
+    gradeName: '',
+    from: '',
+    to: '',
+    placeholder: 'Назва',
   };
 
+  const isLengthCheck = (index: number) => 3 < index + 1;
+
+  const createFieldForm = () => append(defaultGradeField);
+
+  const handleRemoveField = (_id: number) => () => remove(_id);
+
   return (
-    <form id='example' onSubmit={handleSubmit(onSubmit)} className='mt-6'>
+    <form id='createTest' onSubmit={handleSubmit(onSubmit)} className='mt-6'>
       {fields.map(({ id, placeholder }, index) => (
         <div key={id} className='flex w-full'>
           <div className='w-full p-5 border-r-2 border-black flex'>
@@ -86,7 +85,7 @@ const GradeStep: FC<Props> = ({ setCurrentStep }) => {
 
             {isLengthCheck(index) && (
               <TrashSVG
-                onClick={() => removeField(index)}
+                onClick={handleRemoveField(index)}
                 className='w-6 ml-4 cursor-pointer'
               />
             )}
@@ -118,7 +117,7 @@ const GradeStep: FC<Props> = ({ setCurrentStep }) => {
         + Створити
       </span>
 
-      <Button color='primary' type='submit' className='w-60 h-12 mt-8'>
+      <Button color='primary' type='submit' className='!w-64 h-12 mt-8'>
         Продовжити
       </Button>
     </form>

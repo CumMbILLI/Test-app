@@ -7,7 +7,7 @@ import { Input } from 'components/FormField/Input';
 
 import { NameStepFields } from './types';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
-import { setTestName } from 'redux/createTest/action';
+import { setNameTest } from 'redux/createTest/action';
 import Button from 'components/Button/Button';
 
 interface Props {
@@ -22,7 +22,7 @@ export const NameStep: FC<Props> = ({
   setCurrentStep,
 }) => {
   const dispatch = useAppDispatch();
-  const test = useAppSelector((state) => state.testName);
+  const test = useAppSelector((state) => state.testCreate);
 
   const validationSchema = yup.object().shape({
     testName: yup.string().required(),
@@ -42,13 +42,17 @@ export const NameStep: FC<Props> = ({
   const isError = Boolean(errors.testName?.message);
 
   const onSubmit: SubmitHandler<NameStepFields> = async (data) => {
-    dispatch(setTestName(data));
+    dispatch(setNameTest(data));
 
     setCurrentStep((prev) => ++prev);
   };
 
   return (
-    <form id='example' className={className} onSubmit={handleSubmit(onSubmit)}>
+    <form
+      id='createTest'
+      className={className}
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <Input
         isError={isError}
         label='Назва тесту'
@@ -57,7 +61,7 @@ export const NameStep: FC<Props> = ({
         required={required}
       />
 
-      <Button color='primary' type='submit' className='w-60 h-12 mt-8'>
+      <Button color='primary' type='submit' className='!w-64 h-12 mt-8'>
         Продовжити
       </Button>
     </form>

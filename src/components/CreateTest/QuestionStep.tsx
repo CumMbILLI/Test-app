@@ -19,7 +19,7 @@ interface Props {
 
 const QuestionStep: FC<Props> = ({ setCurrentStep }) => {
   const dispatch = useAppDispatch();
-  const test = useAppSelector((state) => state.testName);
+  const { questionsTest } = useAppSelector((state) => state.testCreate);
 
   const validationSchema = yup.object().shape({
     questionsTest: yup.array().of(
@@ -42,34 +42,34 @@ const QuestionStep: FC<Props> = ({ setCurrentStep }) => {
   } = useForm<QuestionsStepFields>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
-      questionsTest: test.questionsTest,
+      questionsTest: questionsTest,
     },
   });
-
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: 'questionsTest',
-  });
-
-  const createQuestion = () => {
-    append({
-      id: fields.length + 1,
-      image: '',
-      questionTitle: '',
-      correctAnswer: '0',
-      answers: ['', '', '', ''],
-    });
-  };
-
-  const removeQuestion = (index: number) => remove(index);
 
   const onSubmit: SubmitHandler<QuestionsStepFields> = async (data) => {
     dispatch(setQuestionsTest(data));
     setCurrentStep((prev) => ++prev);
   };
 
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'questionsTest',
+  });
+
+  const defaultQuestionField = {
+    id: fields.length + 1,
+    image: '',
+    questionTitle: '',
+    correctAnswer: '0',
+    answers: ['', '', '', ''],
+  };
+
+  const createQuestion = () => append(defaultQuestionField);
+
+  const handleRemoveQuestion = (_id: number) => () => remove(_id);
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form id='createTest' onSubmit={handleSubmit(onSubmit)}>
       <div className='bg-gray-200 mt-10 p-5 grid gap-4'>
         {fields.map(({ id, answers, image, correctAnswer }, index) => (
           <div key={id} className='border-2 border-gray-100 px-5 '>
@@ -77,14 +77,14 @@ const QuestionStep: FC<Props> = ({ setCurrentStep }) => {
               <span className='w-full text-center'>Питання {index + 1}</span>
               {fields.length > 1 && (
                 <TrashSVG
-                  onClick={() => removeQuestion(index)}
+                  onClick={handleRemoveQuestion(index)}
                   className='w-6 cursor-pointer fill-red-500'
                 />
               )}
             </div>
             <div className='flex justify-center my-5'>
               <Upload
-                imageState={image}
+                imageString={image}
                 className='!w-72 !h-40'
                 name={`questionsTest.${index}.image`}
                 setValue={setValue}
@@ -120,7 +120,7 @@ const QuestionStep: FC<Props> = ({ setCurrentStep }) => {
           </span>
         </div>
       </div>
-      <Button color='primary' type='submit' className='w-60 h-12 mt-8'>
+      <Button color='primary' type='submit' className='!w-64 h-12 mt-8'>
         Продовжити
       </Button>
     </form>

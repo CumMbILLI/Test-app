@@ -3,11 +3,7 @@
 module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    extend: {
-      backgroundImage: {
-        'line-texture': "url('assets/line.svg')",
-      },
-    },
+    extend: {},
   },
   plugins: [],
 };

@@ -45,7 +45,7 @@ export const setFieldsReducer = (
   action: ActionCreateTest
 ): CreateTestState => {
   switch (action.type) {
-    case CreateActionTyped.SET_TEST_NAME:
+    case CreateActionTyped.SET_NAME_TEST:
       return {
         ...state,
         testName: action.values?.testName,
