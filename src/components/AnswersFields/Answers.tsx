@@ -1,4 +1,5 @@
 import React from 'react';
+import cn from 'classnames';
 import { Path, UseFormRegister } from 'react-hook-form';
 
 import RadioButton from 'components/FormField/RadioButton';
@@ -10,20 +11,22 @@ interface Props<T extends Record<string, any>> {
   index: number;
   answers?: string[];
   errors?: any;
-  defaultValueRadio: string;
+  defaultValueRadio?: string;
+  className?: string;
 }
 
-const AnswerField = <T extends Record<string, any>>({
+const Answers = <T extends Record<string, any>>({
   name,
   register,
   index,
   answers,
   errors,
   defaultValueRadio,
+  className,
 }: Props<T>) => {
   return (
-    <div className='flex flex-col gap-2'>
-      {answers?.map((_, _index) => (
+    <div className={cn('flex flex-col gap-2', className)}>
+      {answers?.map((answerText, _index) => (
         <div className='flex w-full items-center' key={_index}>
           <div className='mr-3'>
             <RadioButton
@@ -50,4 +53,4 @@ const AnswerField = <T extends Record<string, any>>({
   );
 };
 
-export default AnswerField;
+export default Answers;

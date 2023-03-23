@@ -19,6 +19,8 @@ const FinishStep = () => {
       gradesTest: gradesTest,
       questionsTest: questionsTest,
       completed: false,
+      quesionsLength: questionsTest.length,
+      result: '-',
     };
 
     dispatch(createTestAsync(data));

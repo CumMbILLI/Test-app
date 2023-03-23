@@ -1,7 +1,8 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { setFieldsReducer } from './createTest/reducer';
-import { getCurrentTestReducer, getTestsReducer } from './listTest/reducer';
+import { getCurrentTestReducer } from './currectTest/reducer';
+import { getTestsReducer } from './listTest/reducer';
 
 export const rootReducer = combineReducers({
   tests: getTestsReducer,

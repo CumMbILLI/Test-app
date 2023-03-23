@@ -7,7 +7,7 @@ interface Props<T extends Record<string, any>> {
   required?: boolean;
   className?: string;
   value: string;
-  defaultValue: string;
+  defaultValue?: string;
 }
 
 const RadioButton = <T extends Record<string, any>>({

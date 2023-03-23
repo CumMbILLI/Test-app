@@ -5,13 +5,13 @@ import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
 
 import Upload from 'components/FormField/Upload';
 import { Input } from 'components/FormField/Input';
-import AnswersFields from './AnswersFields';
 import { QuestionsStepFields } from './types';
 
 import { ReactComponent as TrashSVG } from 'assets/trash.svg';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { setQuestionsTest } from 'redux/createTest/action';
 import Button from 'components/Button/Button';
+import Answers from 'components/AnswersFields/Answers';
 
 interface Props {
   setCurrentStep: Dispatch<SetStateAction<number>>;
@@ -99,7 +99,7 @@ const QuestionStep: FC<Props> = ({ setCurrentStep }) => {
               name={`questionsTest.${index}.questionTitle`}
             />
             <div className='grid gap-3 m-5'>
-              <AnswersFields
+              <Answers
                 defaultValueRadio={correctAnswer}
                 name={`questionsTest.${index}`}
                 index={index}

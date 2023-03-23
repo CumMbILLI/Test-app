@@ -1,29 +1,4 @@
-import { GradeTestItem, QuestionTestItem } from 'redux/types';
-
-export type ActionItemType =
-  | FetchItemAction
-  | FetchItemSuccess
-  | FetchItemError;
-
-export interface FetchItemAction {
-  type: FetchItemTypes.FETCH_ITEM;
-}
-
-export interface FetchItemSuccess {
-  type: FetchItemTypes.FETCH_ITEM_SUCCESS;
-  payload: TestItem[];
-}
-
-export interface FetchItemError {
-  type: FetchItemTypes.FETCH_ITEM_ERROR;
-  payload: string;
-}
-
-export enum FetchItemTypes {
-  FETCH_ITEM = 'FETCH_ITEM',
-  FETCH_ITEM_SUCCESS = 'FETCH_ITEM_SUCCESS',
-  FETCH_ITEM_ERROR = 'FETCH_ITEM_ERROR',
-}
+import { TestItem } from 'redux/types';
 
 export type ActionListType =
   | FetchListAction
@@ -50,17 +25,8 @@ export interface FetchListError {
   payload: string;
 }
 
-export interface TestsState {
-  testItem?: TestItem[] | null;
+export interface TestsListState {
   testList?: TestItem[] | null;
   loading: boolean;
   error?: string | null;
-}
-
-export interface TestItem {
-  id: string;
-  nameTest: string;
-  gradesTest: GradeTestItem[];
-  questionsTest: QuestionTestItem[];
-  completed: boolean;
 }

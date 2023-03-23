@@ -22,7 +22,7 @@ export const NameStep: FC<Props> = ({
   setCurrentStep,
 }) => {
   const dispatch = useAppDispatch();
-  const test = useAppSelector((state) => state.testCreate);
+  const { testName } = useAppSelector((state) => state.testCreate);
 
   const validationSchema = yup.object().shape({
     testName: yup.string().required(),
@@ -35,7 +35,7 @@ export const NameStep: FC<Props> = ({
   } = useForm<NameStepFields>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
-      testName: test.testName,
+      testName: testName,
     },
   });
 

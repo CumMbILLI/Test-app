@@ -27,7 +27,7 @@ const Button: FC<Props> = ({
         className,
         {
           'bg-green-500': color === 'primary',
-          'bg-neutral-500': color === 'secondary',
+          'bg-neutral-400': color === 'secondary',
         }
       )}
     >

@@ -17,3 +17,11 @@ export interface GradeTestItem {
   from: string;
   to: string;
 }
+
+export interface TestItem {
+  id: string;
+  nameTest: string;
+  gradesTest: GradeTestItem[];
+  questionsTest: QuestionTestItem[];
+  completed: boolean;
+}
