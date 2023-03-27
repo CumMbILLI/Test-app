@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import TestInfo from 'components/PassingTest/TestInfo';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { getTestByIdAsync } from 'redux/currectTest/action';
+
+import TestInfo from 'components/PassingTest/TestInfo';
 import Test from 'components/PassingTest/Test';
 
 const HEADER = [
@@ -13,7 +14,7 @@ const HEADER = [
   },
   {
     name: 'Кількість питань',
-    field: 'quesionsLength',
+    field: 'questionsLength',
     className: '!w-[150px]',
   },
   {
@@ -29,17 +30,19 @@ const PassingTest = () => {
   const dispatch = useAppDispatch();
   const { testItem } = useAppSelector((state) => state.testItem);
 
-  const [param] = useSearchParams();
+  const [params] = useSearchParams();
 
-  const testId = param.get('testId');
+  const testId = params.get('testId');
 
   useEffect(() => {
-    dispatch(getTestByIdAsync(testId!));
-  }, [dispatch, testId]);
+    if (testId) dispatch(getTestByIdAsync(testId));
+  }, [dispatch]);
 
   const handleClick = () => {
     setCurrentStep((prev) => ++prev);
   };
+
+  if (!testItem) return null;
 
   return (
     <div className='flex flex-col items-center mt-5'>
@@ -51,7 +54,7 @@ const PassingTest = () => {
             testData={testItem}
           />
         ) : (
-          <Test questionsTest={testItem?.[0].questionsTest} />
+          <Test testItem={testItem?.[0]} />
         )}
       </div>
     </div>

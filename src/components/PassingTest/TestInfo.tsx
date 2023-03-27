@@ -1,10 +1,12 @@
-import Button from 'components/Button/Button';
-import Table from 'components/Table/Table';
 import React, { FC } from 'react';
 
+import Button from 'components/Button/Button';
+import Table, { TableHeaderProps } from 'components/Table/Table';
+import { TestItem } from 'redux/types';
+
 interface Props {
-  headerTable: any;
-  testData: any;
+  testData: TestItem[];
+  headerTable: TableHeaderProps[];
   handleClick: VoidFunction;
 }
 

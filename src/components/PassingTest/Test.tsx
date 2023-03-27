@@ -3,91 +3,110 @@ import { useSearchParams } from 'react-router-dom';
 
 import Button from 'components/Button/Button';
 import TestResult from './TestResult';
+import { QuestionTestItem, TestItem } from 'redux/types';
 
-export interface QuestionItem {
+export interface QuestionItem extends QuestionTestItem {
   id: number;
   image?: string;
   questionTitle: string;
   correctAnswer: string;
   answers: string[];
+  userAnswer?: string | null;
 }
 
 interface Props {
-  questionsTest?: QuestionItem[];
+  testItem: TestItem;
 }
 
-const Test: FC<Props> = ({ questionsTest }) => {
+const Test: FC<Props> = ({ testItem }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [resultTest, setResulTest] = useState<any | null>(null);
 
-  const [questions, setQuestions] = useState(
-    questionsTest?.map((test) => ({ ...test, userAnswer: null }))
+  const [questions, setQuestions] = useState<QuestionItem[]>(
+    testItem.testQuestions.map((test: any) => ({ ...test, userAnswer: null }))
   );
 
-  const [queryParam, setQueryParam] = useSearchParams();
+  const [params, setParams] = useSearchParams();
 
-  //@ts-ignore
-  const currectQuestionID = queryParam!.get('questionId') | 0;
+  const currectQuestionInd = Number(params.get('questionIdx'));
 
   useEffect(() => {
-    setQueryParam(
-      `testId=${queryParam.get('testId')}&questionId=${currentQuestion}`
-    );
+    setParams(`testId=${params.get('testId')}&questionIdx=${currentQuestion}`);
   }, [currentQuestion]);
 
   const calculateResult = () => {
     if (questions) {
-      setResulTest(() =>
-        questions?.filter((item) => item.correctAnswer === item.userAnswer)
+      setResulTest(
+        questions
+          .map(({ correctAnswer, userAnswer, id }) =>
+            correctAnswer === userAnswer ? id : null
+          )
+          .filter((item) => item !== null)
       );
     }
   };
 
   const changeUserAnswer = (value: string) => {
     setQuestions((prev) =>
-      prev?.map((item: any) =>
-        item.id === questions?.[currectQuestionID].id
+      prev?.map((item) =>
+        item.id === questions?.[currectQuestionInd].id
           ? { ...item, userAnswer: value }
           : item
       )
     );
   };
 
-  const nextQuestion = () => setCurrentQuestion((prev) => ++prev);
+  const nextQuestion = () => {
+    setCurrentQuestion((prev) => ++prev);
+  };
 
-  const prevQuestion = () => setCurrentQuestion((prev) => --prev);
+  const prevQuestion = () => {
+    setCurrentQuestion((prev) => --prev);
+  };
 
-  if (resultTest && questions)
-    return <TestResult resultTest={resultTest} questions={questions} />;
+  if (!params.get('questionIdx')) return null;
 
   if (!questions) return null;
+
+  if (resultTest && questions)
+    return (
+      <TestResult
+        testItem={testItem}
+        resultTest={resultTest}
+        questions={questions}
+      />
+    );
 
   return (
     <div className='w-[600px]'>
       <div className='w-full flex justify-center'>
-        {questions?.[currectQuestionID].image && (
+        {questions?.[currectQuestionInd].image && (
           <img
             className='mb-4 h-56 object-contain'
-            src={questions?.[currectQuestionID].image}
+            src={questions?.[currectQuestionInd].image}
             alt=''
           />
         )}
       </div>
       <span className='text-xl w-full border-b border-black block'>
-        {questions?.[currectQuestionID].questionTitle}
+        {questions?.[currectQuestionInd].questionTitle}
       </span>
       <div className='grid gap-2 text-base my-4 px-4'>
-        {questions?.[currectQuestionID].answers.map((answerText, index) => (
-          <div key={index}>
+        {questions?.[currectQuestionInd].answers.map((answerText, index) => (
+          <div
+            className='cursor-pointer w-max'
+            key={index}
+            onClick={() => changeUserAnswer(index.toString())}
+          >
             <input
               checked={
-                questions?.[currectQuestionID].userAnswer === index.toString()
+                questions?.[currectQuestionInd].userAnswer === index.toString()
               }
-              className='mr-3'
+              onChange={(e) => changeUserAnswer(e.target.value)}
+              className='mr-3 cursor-pointer'
               name='radio'
               type='radio'
               value={index}
-              onChange={(e) => changeUserAnswer(e.target.value)}
             />
             {answerText}
           </div>
@@ -95,13 +114,13 @@ const Test: FC<Props> = ({ questionsTest }) => {
       </div>
 
       <div className='flex gap-40'>
-        {1 <= currectQuestionID && (
+        {1 <= currectQuestionInd && (
           <Button type='button' color='secondary' onClick={prevQuestion}>
             Назад
           </Button>
         )}
 
-        {questions?.length - 1 > currectQuestionID ? (
+        {questions?.length - 1 > currectQuestionInd ? (
           <Button type='button' color='secondary' onClick={nextQuestion}>
             Впреред
           </Button>

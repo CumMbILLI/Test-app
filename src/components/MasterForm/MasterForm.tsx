@@ -1,15 +1,21 @@
-import React, { FC, SetStateAction, useEffect, useState } from 'react';
+import React, {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useEffect,
+  useState,
+} from 'react';
 import { useAppDispatch } from 'redux/hooks';
+import { useSearchParams } from 'react-router-dom';
 
 import FormSteps from 'components/FormSteps/FormSteps';
 import { cancelTestCreation } from 'redux/createTest/action';
 
 import { ReactComponent as ArrowSVG } from 'assets/arrow.svg';
 import { ReactComponent as CloseSVG } from 'assets/close.svg';
-import { useSearchParams } from 'react-router-dom';
 
 interface FieldProps {
-  setCurrentStep: React.Dispatch<SetStateAction<number>>;
+  setCurrentStep: Dispatch<SetStateAction<number>>;
 }
 
 interface FieldFormItem {
@@ -25,13 +31,13 @@ interface Props {
 const MasterForm: FC<Props> = ({ fieldsForm, finalStep }) => {
   const dispatch = useAppDispatch();
 
-  const [queryParam, setQueryParam] = useSearchParams();
+  const [params, setParams] = useSearchParams();
 
   const [currentStep, setCurrentStep] = useState(1);
 
   useEffect(
-    () => setQueryParam({ step: `${currentStep}` }),
-    [currentStep, setCurrentStep, setQueryParam]
+    () => setParams({ step: `${currentStep}` }),
+    [currentStep, setCurrentStep, setParams]
   );
 
   const prevStep = () => setCurrentStep((prev) => --prev);
@@ -54,7 +60,7 @@ const MasterForm: FC<Props> = ({ fieldsForm, finalStep }) => {
         <FormSteps finalStep={finalStep} currentStep={currentStep} />
 
         {fieldsForm.map(({ step, component: Component }) =>
-          Number(queryParam.get('step')) === step ? (
+          Number(params.get('step')) === step ? (
             <Component key={step} setCurrentStep={setCurrentStep} />
           ) : null
         )}

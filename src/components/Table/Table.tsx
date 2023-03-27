@@ -1,14 +1,14 @@
 import classNames from 'classnames';
 import React, { FC } from 'react';
 
-interface HeaderItem {
+export interface TableHeaderProps {
   name: string;
   field: string;
   className?: string;
 }
 
 interface Props {
-  header: HeaderItem[];
+  header: TableHeaderProps[];
   data: any;
 }
 
@@ -33,7 +33,7 @@ const Table: FC<Props> = ({ header, data }) => {
       <tbody>
         {data?.map((item: any, index: number) => (
           <tr key={index}>
-            {header.map(({ field }, index) => (
+            {header.map(({ field }) => (
               <td key={field} className='border border-black h-12'>
                 <span className='flex justify-center'>{item?.[field]}</span>
               </td>

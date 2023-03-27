@@ -12,10 +12,10 @@ export const getCurrentTestReducer = (
 ): TestsItemState => {
   switch (action.type) {
     case FetchItemTypes.FETCH_ITEM:
-      return { loading: true, testItem: null, error: null };
+      return { ...state };
 
     case FetchItemTypes.FETCH_ITEM_SUCCESS:
-      return { loading: false, testItem: action.payload, error: null };
+      return { ...state, loading: false, testItem: action.payload };
 
     case FetchItemTypes.FETCH_ITEM_ERROR:
       return { loading: false, testItem: undefined, error: action.payload };

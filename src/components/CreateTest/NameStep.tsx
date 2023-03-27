@@ -17,7 +17,7 @@ interface Props {
 }
 
 export const NameStep: FC<Props> = ({
-  required = true,
+  required = false,
   className,
   setCurrentStep,
 }) => {

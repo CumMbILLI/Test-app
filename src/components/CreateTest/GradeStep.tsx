@@ -17,16 +17,16 @@ interface Props {
 
 const GradeStep: FC<Props> = ({ setCurrentStep }) => {
   const dispatch = useAppDispatch();
-  const { gradesTest } = useAppSelector((state) => state.testCreate);
+  const { testGrades } = useAppSelector((state) => state.testCreate);
 
   const validationSchema = yup.object().shape({
-    gradesTest: yup.array().of(
+    testGrades: yup.array().of(
       yup.object().shape({
         id: yup.number(),
         placeholder: yup.string(),
         gradeName: yup.string().required(),
-        from: yup.string().required(),
-        to: yup.string().required(),
+        from: yup.number().min(0).max(100).required(),
+        to: yup.number().min(0).max(100).required(),
       })
     ),
   });
@@ -39,18 +39,13 @@ const GradeStep: FC<Props> = ({ setCurrentStep }) => {
   } = useForm<GradesFields>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
-      gradesTest: gradesTest,
+      testGrades: testGrades,
     },
   });
 
-  const onSubmit: SubmitHandler<GradesFields> = async (data) => {
-    dispatch(setGradeTest(data));
-    setCurrentStep((prev) => ++prev);
-  };
-
   const { remove, fields, append } = useFieldArray({
     control,
-    name: 'gradesTest',
+    name: 'testGrades',
   });
 
   const defaultGradeField = {
@@ -61,11 +56,18 @@ const GradeStep: FC<Props> = ({ setCurrentStep }) => {
     placeholder: 'Назва',
   };
 
-  const isLengthCheck = (index: number) => 3 < index + 1;
+  const onSubmit: SubmitHandler<GradesFields> = async (data) => {
+    dispatch(setGradeTest(data));
+    setCurrentStep((prev) => ++prev);
+  };
 
-  const createFieldForm = () => append(defaultGradeField);
+  const createFieldForm = () => {
+    append(defaultGradeField);
+  };
 
-  const handleRemoveField = (_id: number) => () => remove(_id);
+  const handleRemoveField = (_id: number) => () => {
+    remove(_id);
+  };
 
   return (
     <form id='createTest' onSubmit={handleSubmit(onSubmit)} className='mt-6'>
@@ -75,15 +77,15 @@ const GradeStep: FC<Props> = ({ setCurrentStep }) => {
             <div className='w-full'>
               <Input
                 isError={Boolean(
-                  errors.gradesTest?.[index]?.gradeName?.message
+                  errors.testGrades?.[index]?.gradeName?.message
                 )}
-                name={`gradesTest.${index}.gradeName`}
+                name={`testGrades.${index}.gradeName`}
                 register={register}
                 placeholder={placeholder}
               />
             </div>
 
-            {isLengthCheck(index) && (
+            {3 < index + 1 && (
               <TrashSVG
                 onClick={handleRemoveField(index)}
                 className='w-6 ml-4 cursor-pointer'
@@ -94,17 +96,17 @@ const GradeStep: FC<Props> = ({ setCurrentStep }) => {
           <div className='w-1/2 h-max p-5 flex items-center justify-center'>
             <span className='mx-2 text-lg'>від</span>
             <Input
-              isError={Boolean(errors.gradesTest?.[index]?.from?.message)}
+              isError={Boolean(errors.testGrades?.[index]?.from?.message)}
               className='w-20'
               register={register}
-              name={`gradesTest.${index}.from`}
+              name={`testGrades.${index}.from`}
             />
             <span className='mx-2 text-lg'>до</span>
             <Input
-              isError={Boolean(errors.gradesTest?.[index]?.to?.message)}
+              isError={Boolean(errors.testGrades?.[index]?.to?.message)}
               className='w-20'
               register={register}
-              name={`gradesTest.${index}.to`}
+              name={`testGrades.${index}.to`}
             />
           </div>
         </div>

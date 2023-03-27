@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from 'redux/hooks';
 const FinishStep = () => {
   const dispatch = useAppDispatch();
 
-  const { testName, gradesTest, questionsTest } = useAppSelector(
+  const { testName, testGrades, testQuestions } = useAppSelector(
     (state) => state.testCreate
   );
 
@@ -15,11 +15,11 @@ const FinishStep = () => {
 
   const onSubmit = () => {
     const data = {
-      nameTest: testName,
-      gradesTest: gradesTest,
-      questionsTest: questionsTest,
+      testName: testName,
+      testGrades: testGrades,
+      testQuestions: testQuestions,
       completed: false,
-      quesionsLength: questionsTest.length,
+      questionsLength: testQuestions.length,
       result: '-',
     };
 

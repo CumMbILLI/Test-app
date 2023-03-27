@@ -36,8 +36,8 @@ const INITIAL_QUESTIONS_TEST = [
 
 const initialState: CreateTestState = {
   testName: '',
-  gradesTest: INITIAL_GRADE_TEST,
-  questionsTest: INITIAL_QUESTIONS_TEST,
+  testGrades: INITIAL_GRADE_TEST,
+  testQuestions: INITIAL_QUESTIONS_TEST,
 };
 
 export const setFieldsReducer = (
@@ -53,19 +53,18 @@ export const setFieldsReducer = (
     case CreateActionTyped.SET_GRADES_TEST:
       return {
         ...state,
-        gradesTest: action.values?.gradesTest,
+        testGrades: action.values?.testGrades,
       };
     case CreateActionTyped.SET_QUESTIONS_TEST:
       return {
         ...state,
-        questionsTest: action.values?.questionsTest,
+        testQuestions: action.values?.testQuestions,
       };
     case CreateActionTyped.CLEAR_STATE_TEST:
       return {
-        ...state,
         testName: '',
-        gradesTest: INITIAL_GRADE_TEST,
-        questionsTest: INITIAL_QUESTIONS_TEST,
+        testGrades: INITIAL_GRADE_TEST,
+        testQuestions: INITIAL_QUESTIONS_TEST,
       };
 
     default:

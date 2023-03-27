@@ -4,15 +4,15 @@ import { useAppSelector } from 'redux/hooks';
 import TestItem from './TestItem';
 
 const TestList = () => {
-  const testList = useAppSelector((state) => state.tests.testList);
+  const { testList } = useAppSelector((state) => state.tests);
 
   return (
     <div className='grid gap-2 mt-10'>
-      {testList?.map(({ id, nameTest, completed }, index) => (
+      {testList?.map(({ id, testName, completed }, index) => (
         <TestItem
           id={id}
           key={index + id}
-          name={nameTest}
+          name={testName}
           completed={completed}
           index={index}
         />

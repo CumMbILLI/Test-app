@@ -1,8 +1,8 @@
 {
   "tests": [
     {
-      "nameTest": "Тест1",
-      "gradesTest": [
+      "testName": "Тест1",
+      "testGrades": [
         {
           "id": 1,
           "gradeName": "Оцинка1",
@@ -25,7 +25,7 @@
           "to": "50"
         }
       ],
-      "questionsTest": [
+      "testQuestions": [
         {
           "id": 1,
           "image": "",
@@ -76,53 +76,9 @@
         }
       ],
       "completed": true,
-      "quesionsLength": 4,
+      "questionsLength": 4,
       "result": 100,
       "id": 1
-    },
-    {
-      "nameTest": "Назва тесту",
-      "gradesTest": [
-        {
-          "id": 1,
-          "gradeName": "Оцинка1",
-          "placeholder": "Мудрець",
-          "from": "90",
-          "to": "100"
-        },
-        {
-          "id": 2,
-          "gradeName": "Оцинка2",
-          "placeholder": "Знавець",
-          "from": "50",
-          "to": "90"
-        },
-        {
-          "id": 3,
-          "gradeName": "Оцинка3",
-          "placeholder": "Невдаха",
-          "from": "0",
-          "to": "50"
-        }
-      ],
-      "questionsTest": [
-        {
-          "id": 1,
-          "image": "",
-          "questionTitle": "Питання1",
-          "correctAnswer": "0",
-          "answers": [
-            "Видповидь1",
-            "Видповидь2",
-            "Видповидь3",
-            "Видповидь4"
-          ]
-        }
-      ],
-      "completed": true,
-      "quesionsLength": 1,
-      "result": 0,
-      "id": 3
     }
   ]
 }

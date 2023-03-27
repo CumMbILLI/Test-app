@@ -3,7 +3,7 @@ export interface NameStepFields {
 }
 
 export interface QuestionsStepFields {
-  questionsTest: QuestionItem[];
+  testQuestions: QuestionItem[];
 }
 
 interface QuestionItem {
@@ -15,7 +15,7 @@ interface QuestionItem {
 }
 
 export interface GradesFields {
-  gradesTest: GradeItem[];
+  testGrades: GradeItem[];
 }
 
 interface GradeItem {

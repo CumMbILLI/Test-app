@@ -42,18 +42,18 @@ export const getTestByIdAsync = (id: string) => {
   };
 };
 
-export const putTestAsync = (id: string, value: any) => {
-  console.log(value);
-
-  return async (dispatch: Dispatch<any>) => {
+export const putTestAsync = (id: string, value: TestItem) => {
+  return async (dispatch: Dispatch<ActionItemType>) => {
     try {
-      instance.put(`tests/${id}`, value);
-      
-      dispatch(getTestByIdAsync(id));
+      dispatch(fetchItem());
+
+      const { data } = await instance.put(`tests/${id}`, value);
+
+      dispatch(fetchItemSuccess([data]));
     } catch (e) {
       const err = e as AxiosError;
 
-      console.log(err);
+      dispatch(fetchItemError(err.message));
     }
   };
 };

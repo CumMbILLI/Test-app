@@ -12,10 +12,10 @@ export const getTestsReducer = (
 ): TestsListState => {
   switch (action.type) {
     case FetchListTypes.FETCH_LIST:
-      return { loading: true, testList: null, error: null };
+      return { ...state };
 
     case FetchListTypes.FETCH_LIST_SUCCESS:
-      return { loading: false, testList: action.payload, error: null };
+      return { ...state, loading: false, testList: action.payload };
 
     case FetchListTypes.FETCH_LIST_ERROR:
       return { loading: false, testList: undefined, error: action.payload };

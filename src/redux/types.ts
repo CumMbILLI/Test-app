@@ -20,8 +20,8 @@ export interface GradeTestItem {
 
 export interface TestItem {
   id: string;
-  nameTest: string;
-  gradesTest: GradeTestItem[];
-  questionsTest: QuestionTestItem[];
+  testName: string;
+  testGrades: GradeTestItem[];
+  testQuestions: QuestionTestItem[];
   completed: boolean;
 }

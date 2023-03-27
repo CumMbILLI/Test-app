@@ -40,7 +40,7 @@ const Answers = <T extends Record<string, any>>({
           <div className='w-full'>
             <Input
               isError={Boolean(
-                errors?.questionsTest?.[index]?.answers?.[_index]?.message
+                errors?.testQuestions?.[index]?.answers?.[_index]?.message
               )}
               placeholder='Відповідь'
               register={register}

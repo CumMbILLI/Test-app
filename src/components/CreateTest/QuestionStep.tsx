@@ -9,7 +9,7 @@ import { QuestionsStepFields } from './types';
 
 import { ReactComponent as TrashSVG } from 'assets/trash.svg';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
-import { setQuestionsTest } from 'redux/createTest/action';
+import { settestQuestions } from 'redux/createTest/action';
 import Button from 'components/Button/Button';
 import Answers from 'components/AnswersFields/Answers';
 
@@ -19,10 +19,10 @@ interface Props {
 
 const QuestionStep: FC<Props> = ({ setCurrentStep }) => {
   const dispatch = useAppDispatch();
-  const { questionsTest } = useAppSelector((state) => state.testCreate);
+  const { testQuestions } = useAppSelector((state) => state.testCreate);
 
   const validationSchema = yup.object().shape({
-    questionsTest: yup.array().of(
+    testQuestions: yup.array().of(
       yup.object().shape({
         id: yup.number(),
         image: yup.string(),
@@ -42,18 +42,18 @@ const QuestionStep: FC<Props> = ({ setCurrentStep }) => {
   } = useForm<QuestionsStepFields>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
-      questionsTest: questionsTest,
+      testQuestions: testQuestions,
     },
   });
 
   const onSubmit: SubmitHandler<QuestionsStepFields> = async (data) => {
-    dispatch(setQuestionsTest(data));
+    dispatch(settestQuestions(data));
     setCurrentStep((prev) => ++prev);
   };
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'questionsTest',
+    name: 'testQuestions',
   });
 
   const defaultQuestionField = {
@@ -86,22 +86,22 @@ const QuestionStep: FC<Props> = ({ setCurrentStep }) => {
               <Upload
                 imageString={image}
                 className='!w-72 !h-40'
-                name={`questionsTest.${index}.image`}
+                name={`testQuestions.${index}.image`}
                 setValue={setValue}
               />
             </div>
             <Input
               isError={Boolean(
-                errors?.questionsTest?.[index]?.questionTitle?.message
+                errors?.testQuestions?.[index]?.questionTitle?.message
               )}
               placeholder='Питання'
               register={register}
-              name={`questionsTest.${index}.questionTitle`}
+              name={`testQuestions.${index}.questionTitle`}
             />
             <div className='grid gap-3 m-5'>
               <Answers
                 defaultValueRadio={correctAnswer}
-                name={`questionsTest.${index}`}
+                name={`testQuestions.${index}`}
                 index={index}
                 register={register}
                 answers={answers}

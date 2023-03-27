@@ -21,7 +21,7 @@ const FIELDS_FORM = [
   },
   {
     step: 4,
-    component: (props: any) => <FinishStep />,
+    component: () => <FinishStep />,
   },
 ];
 

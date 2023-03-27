@@ -9,16 +9,17 @@ import {
   GradesValuesType,
   NameValuesType,
   QuestionsValuesType,
-  SetGradesTestAction,
-  SetQuestionsTest,
+  SettestGradesAction,
+  SettestQuestions,
   SetNameTestAction,
+  CreateTestValue,
 } from './types';
 
 const actionTypeCancel = (): CancelCreateTest => ({
   type: CreateActionTyped.CLEAR_STATE_TEST,
 });
 
-export const createTestAsync = (values: any) => {
+export const createTestAsync = (values: CreateTestValue) => {
   return async (dispatch: Dispatch<ActionCreateTest>) => {
     try {
       await instance.post('/tests', values);
@@ -44,7 +45,7 @@ export const setNameTest = (values: NameValuesType) => {
 };
 
 export const setGradeTest = (values: GradesValuesType) => {
-  const action: SetGradesTestAction = {
+  const action: SettestGradesAction = {
     type: CreateActionTyped.SET_GRADES_TEST,
     values,
   };
@@ -52,8 +53,8 @@ export const setGradeTest = (values: GradesValuesType) => {
   return (dispatch: Dispatch<ActionCreateTest>) => dispatch(action);
 };
 
-export const setQuestionsTest = (values: QuestionsValuesType) => {
-  const action: SetQuestionsTest = {
+export const settestQuestions = (values: QuestionsValuesType) => {
+  const action: SettestQuestions = {
     type: CreateActionTyped.SET_QUESTIONS_TEST,
     values,
   };

@@ -31,6 +31,8 @@ export const getTestAsync = () => {
 
       const { data } = await instance.get('/tests');
 
+      console.log(data);
+
       dispatch(fetchListSuccess(data));
     } catch (e) {
       const err = e as AxiosError;
@@ -40,16 +42,17 @@ export const getTestAsync = () => {
   };
 };
 
+//не получаеться затипизировать функцию getTestAsync
 export const removeTestItem = (id: string) => {
   return async (dispatch: Dispatch<any>) => {
     try {
-      await instance.delete(`/tests/${id}`);
+      instance.delete(`/tests/${id}`);
 
       dispatch(getTestAsync());
     } catch (e) {
       const err = e as AxiosError;
 
-      console.log(err);
+      dispatch(fetchListError(err.message));
     }
   };
 };
