@@ -35,8 +35,6 @@ export const getTestByIdAsync = (id: string) => {
     } catch (e) {
       const err = e as AxiosError;
 
-      console.log(err);
-
       dispatch(fetchItemError(err.message));
     }
   };

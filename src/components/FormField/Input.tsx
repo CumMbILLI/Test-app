@@ -1,8 +1,8 @@
 import React from 'react';
 import cn from 'classnames';
-import { Path, UseFormRegister } from 'react-hook-form';
+import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
 
-interface Props<T extends Record<string, any>> {
+interface Props<T extends FieldValues> {
   name: Path<T>;
   register: UseFormRegister<T>;
   placeholder?: string;
@@ -12,7 +12,7 @@ interface Props<T extends Record<string, any>> {
   isError?: boolean;
 }
 
-export const Input = <T extends Record<string, any>>({
+export const Input = <T extends FieldValues>({
   name,
   register,
   placeholder = '',

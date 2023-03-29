@@ -77,8 +77,59 @@
       ],
       "completed": true,
       "questionsLength": 4,
-      "result": 100,
+      "result": 0,
       "id": 1
+    },
+    {
+      "testName": "test",
+      "testGrades": [
+        {
+          "to": 7,
+          "from": 4,
+          "gradeName": "1",
+          "placeholder": "Мудрець",
+          "id": 1
+        },
+        {
+          "to": 8,
+          "from": 5,
+          "gradeName": "2",
+          "placeholder": "Знавець",
+          "id": 2
+        },
+        {
+          "to": 9,
+          "from": 6,
+          "gradeName": "3",
+          "placeholder": "Невдаха",
+          "id": 3
+        },
+        {
+          "to": 11,
+          "from": 10,
+          "gradeName": "10",
+          "placeholder": "Назва",
+          "id": 4
+        }
+      ],
+      "testQuestions": [
+        {
+          "id": 1,
+          "image": "",
+          "questionTitle": "1",
+          "correctAnswer": "0",
+          "answers": [
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        }
+      ],
+      "completed": true,
+      "questionsLength": 1,
+      "result": 0,
+      "id": 3
     }
   ]
 }

@@ -1,5 +1,7 @@
 import React from 'react';
+
 import Logo from 'components/Logo/Logo';
+
 import { ReactComponent as MoonSVG } from 'assets/moon.svg';
 
 const Header = () => {

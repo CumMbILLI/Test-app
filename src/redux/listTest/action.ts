@@ -31,8 +31,6 @@ export const getTestAsync = () => {
 
       const { data } = await instance.get('/tests');
 
-      console.log(data);
-
       dispatch(fetchListSuccess(data));
     } catch (e) {
       const err = e as AxiosError;

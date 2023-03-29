@@ -1,17 +1,14 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import Button from 'components/Button/Button';
 import TestResult from './TestResult';
 import { QuestionTestItem, TestItem } from 'redux/types';
+import TestButtonsNav from './TestButtonsNav';
+import TestFields from './Fields/TestFields';
+import { history } from 'services/history';
 
 export interface QuestionItem extends QuestionTestItem {
-  id: number;
-  image?: string;
-  questionTitle: string;
-  correctAnswer: string;
-  answers: string[];
-  userAnswer?: string | null;
+  userAnswer: string | null;
 }
 
 interface Props {
@@ -19,20 +16,17 @@ interface Props {
 }
 
 const Test: FC<Props> = ({ testItem }) => {
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [resultTest, setResulTest] = useState<any | null>(null);
+  const [resultTest, setResulTest] = useState<(number | null)[] | null>(null);
 
   const [questions, setQuestions] = useState<QuestionItem[]>(
-    testItem.testQuestions.map((test: any) => ({ ...test, userAnswer: null }))
+    testItem.testQuestions.map((test) => ({ ...test, userAnswer: null }))
   );
 
   const [params, setParams] = useSearchParams();
 
-  const currectQuestionInd = Number(params.get('questionIdx'));
+  const testId = params.get('testId');
 
-  useEffect(() => {
-    setParams(`testId=${params.get('testId')}&questionIdx=${currentQuestion}`);
-  }, [currentQuestion]);
+  const questionIdx = Number(params.get('questionIdx'));
 
   const calculateResult = () => {
     if (questions) {
@@ -46,10 +40,10 @@ const Test: FC<Props> = ({ testItem }) => {
     }
   };
 
-  const changeUserAnswer = (value: string) => {
+  const changeUserAnswer = (value: string) => () => {
     setQuestions((prev) =>
       prev?.map((item) =>
-        item.id === questions?.[currectQuestionInd].id
+        item.id === questions?.[questionIdx].id
           ? { ...item, userAnswer: value }
           : item
       )
@@ -57,20 +51,29 @@ const Test: FC<Props> = ({ testItem }) => {
   };
 
   const nextQuestion = () => {
-    setCurrentQuestion((prev) => ++prev);
+    const nextStep = Number(params.get('questionIdx')) + 1;
+
+    setParams(`testId=${params.get('testId')}&questionIdx=${nextStep}`);
   };
 
   const prevQuestion = () => {
-    setCurrentQuestion((prev) => --prev);
+    const prevStep = Number(params.get('questionIdx')) - 1;
+
+    setParams(`testId=${params.get('testId')}&questionIdx=${prevStep}`);
   };
 
-  if (!params.get('questionIdx')) return null;
+  const backStep = () => {
+    setParams(`testId=${params.get('testId')}`);
+  };
+
+  if (!testId) history.push('/');
 
   if (!questions) return null;
 
   if (resultTest && questions)
     return (
       <TestResult
+        testId={testId}
         testItem={testItem}
         resultTest={resultTest}
         questions={questions}
@@ -80,56 +83,32 @@ const Test: FC<Props> = ({ testItem }) => {
   return (
     <div className='w-[600px]'>
       <div className='w-full flex justify-center'>
-        {questions?.[currectQuestionInd].image && (
+        {questions?.[questionIdx].image && (
           <img
             className='mb-4 h-56 object-contain'
-            src={questions?.[currectQuestionInd].image}
+            src={questions?.[questionIdx].image}
             alt=''
           />
         )}
       </div>
       <span className='text-xl w-full border-b border-black block'>
-        {questions?.[currectQuestionInd].questionTitle}
+        {questions?.[questionIdx].questionTitle}
       </span>
-      <div className='grid gap-2 text-base my-4 px-4'>
-        {questions?.[currectQuestionInd].answers.map((answerText, index) => (
-          <div
-            className='cursor-pointer w-max'
-            key={index}
-            onClick={() => changeUserAnswer(index.toString())}
-          >
-            <input
-              checked={
-                questions?.[currectQuestionInd].userAnswer === index.toString()
-              }
-              onChange={(e) => changeUserAnswer(e.target.value)}
-              className='mr-3 cursor-pointer'
-              name='radio'
-              type='radio'
-              value={index}
-            />
-            {answerText}
-          </div>
-        ))}
-      </div>
 
-      <div className='flex gap-40'>
-        {1 <= currectQuestionInd && (
-          <Button type='button' color='secondary' onClick={prevQuestion}>
-            Назад
-          </Button>
-        )}
+      <TestFields
+        questions={questions}
+        questionIdx={questionIdx}
+        handleChange={changeUserAnswer}
+      />
 
-        {questions?.length - 1 > currectQuestionInd ? (
-          <Button type='button' color='secondary' onClick={nextQuestion}>
-            Впреред
-          </Button>
-        ) : (
-          <Button onClick={calculateResult} color='primary' type='button'>
-            Завершити
-          </Button>
-        )}
-      </div>
+      <TestButtonsNav
+        currectQuestion={questionIdx}
+        finalStep={questions.length}
+        nextQuestion={nextQuestion}
+        prevQuestion={prevQuestion}
+        backStep={backStep}
+        finishTest={calculateResult}
+      />
     </div>
   );
 };

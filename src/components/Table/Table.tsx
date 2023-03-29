@@ -1,18 +1,18 @@
 import classNames from 'classnames';
-import React, { FC } from 'react';
+import React from 'react';
 
-export interface TableHeaderProps {
+export interface TableHeaderProps<K> {
   name: string;
-  field: string;
+  field: K;
   className?: string;
 }
 
-interface Props {
-  header: TableHeaderProps[];
-  data: any;
+interface Props<T, K extends keyof T> {
+  header: TableHeaderProps<K>[];
+  data: Array<T>;
 }
 
-const Table: FC<Props> = ({ header, data }) => {
+const Table = <T, K extends keyof T>({ header, data }: Props<T, K>) => {
   return (
     <table className='w-full border border-black'>
       <thead className='border border-black'>
@@ -31,11 +31,13 @@ const Table: FC<Props> = ({ header, data }) => {
         </tr>
       </thead>
       <tbody>
-        {data?.map((item: any, index: number) => (
+        {data?.map((item, index) => (
           <tr key={index}>
-            {header.map(({ field }) => (
-              <td key={field} className='border border-black h-12'>
-                <span className='flex justify-center'>{item?.[field]}</span>
+            {header.map(({ field }, index) => (
+              <td key={index} className='border border-black h-12'>
+                <span className='flex justify-center'>
+                  {item[field] as string}
+                </span>
               </td>
             ))}
           </tr>

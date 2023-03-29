@@ -24,4 +24,6 @@ export interface TestItem {
   testGrades: GradeTestItem[];
   testQuestions: QuestionTestItem[];
   completed: boolean;
+  result: number | '-';
+  questionsLength: number;
 }

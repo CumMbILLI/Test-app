@@ -6,7 +6,8 @@ import { TestItem } from 'redux/types';
 import { QuestionItem } from './Test';
 
 interface Props {
-  resultTest: number[];
+  testId: string | null;
+  resultTest: (number | null)[];
   testItem: TestItem;
   questions: QuestionItem[];
 }
@@ -22,10 +23,13 @@ const TestResult: FC<Props> = ({ testItem, questions, resultTest }) => {
 
   const wrongAnswersCount = questions.length - resultTest.length;
 
-  const userGradeTest = testItem?.testGrades.filter(
-    ({ from, to }) =>
+  const userGradeTest = testItem?.testGrades
+    .map(({ from, to, gradeName }) =>
       resultPercent >= Number(from) && resultPercent <= Number(to)
-  );
+        ? gradeName
+        : null
+    )
+    .filter((item) => item !== null);
 
   useEffect(() => {
     const value = {
@@ -49,7 +53,7 @@ const TestResult: FC<Props> = ({ testItem, questions, resultTest }) => {
             {resultPercent}%
           </span>
         </span>
-        <span>Ваш ранг: {userGradeTest?.[0].gradeName}</span>
+        {userGradeTest[0] && <span>Ваш ранг: {userGradeTest?.[0]}</span>}
       </div>
 
       <div className='text-base flex flex-col text-left border-t border-black mt-5 gap-2 py-2 px-4'>

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import cn from 'classnames';
-import { Path, UseFormRegister } from 'react-hook-form';
+import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
 
 import { ReactComponent as DoneSVG } from 'assets/done.svg';
 
-interface Props<T extends Record<string, any>> {
+interface Props<T extends FieldValues> {
   className?: string;
   label?: string;
   name?: Path<T>;
@@ -12,7 +12,7 @@ interface Props<T extends Record<string, any>> {
   onChange?: VoidFunction;
 }
 
-const CheckBox = <T extends Record<string, any>>({
+const CheckBox = <T extends FieldValues>({
   className,
   label,
   onChange,

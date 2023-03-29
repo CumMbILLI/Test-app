@@ -1,10 +1,10 @@
 import React, { ChangeEvent, useState } from 'react';
 import cn from 'classnames';
-import { Path, PathValue, UseFormSetValue } from 'react-hook-form';
+import { FieldValues, Path, PathValue, UseFormSetValue } from 'react-hook-form';
 import { ReactComponent as DownloadSVG } from 'assets/download.svg';
 import { ReactComponent as CloseSVG } from 'assets/close.svg';
 
-interface Props<T extends Record<string, any>> {
+interface Props<T extends FieldValues> {
   name: Path<T>;
   setValue: UseFormSetValue<T>;
   placeholder?: string;
@@ -12,7 +12,7 @@ interface Props<T extends Record<string, any>> {
   imageString?: string;
 }
 
-const Upload = <T extends Record<string, any>>({
+const Upload = <T extends FieldValues>({
   name,
   placeholder = 'Виберіть файл',
   setValue,

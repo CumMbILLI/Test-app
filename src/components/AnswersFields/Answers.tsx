@@ -1,11 +1,11 @@
 import React from 'react';
 import cn from 'classnames';
-import { Path, UseFormRegister } from 'react-hook-form';
+import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
 
 import RadioButton from 'components/FormField/RadioButton';
 import { Input } from 'components/FormField/Input';
 
-interface Props<T extends Record<string, any>> {
+interface Props<T extends FieldValues> {
   name: Path<T>;
   register: UseFormRegister<T>;
   index: number;
@@ -15,7 +15,7 @@ interface Props<T extends Record<string, any>> {
   className?: string;
 }
 
-const Answers = <T extends Record<string, any>>({
+const Answers = <T extends FieldValues>({
   name,
   register,
   index,
