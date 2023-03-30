@@ -15,21 +15,21 @@ interface Props {
   setCurrentStep: Dispatch<SetStateAction<number>>;
 }
 
+const validationSchema = yup.object().shape({
+  testGrades: yup.array().of(
+    yup.object().shape({
+      id: yup.number(),
+      placeholder: yup.string(),
+      gradeName: yup.string().required(),
+      from: yup.number().min(0).max(100).required(),
+      to: yup.number().min(0).max(100).required(),
+    })
+  ),
+});
+
 const GradeStep: FC<Props> = ({ setCurrentStep }) => {
   const dispatch = useAppDispatch();
   const { testGrades } = useAppSelector((state) => state.testCreate);
-
-  const validationSchema = yup.object().shape({
-    testGrades: yup.array().of(
-      yup.object().shape({
-        id: yup.number(),
-        placeholder: yup.string(),
-        gradeName: yup.string().required(),
-        from: yup.number().min(0).max(100).required(),
-        to: yup.number().min(0).max(100).required(),
-      })
-    ),
-  });
 
   const {
     register,
@@ -39,7 +39,7 @@ const GradeStep: FC<Props> = ({ setCurrentStep }) => {
   } = useForm<GradesFields>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
-      testGrades: testGrades,
+      testGrades,
     },
   });
 
@@ -48,20 +48,20 @@ const GradeStep: FC<Props> = ({ setCurrentStep }) => {
     name: 'testGrades',
   });
 
-  const defaultGradeField = {
-    id: fields.length + 1,
-    gradeName: '',
-    from: '',
-    to: '',
-    placeholder: 'Назва',
-  };
-
   const onSubmit: SubmitHandler<GradesFields> = async (data) => {
     dispatch(setGradeTest(data));
     setCurrentStep((prev) => ++prev);
   };
 
   const createFieldForm = () => {
+    const defaultGradeField = {
+      id: fields.length + 1,
+      gradeName: '',
+      from: '',
+      to: '',
+      placeholder: 'Назва',
+    };
+
     append(defaultGradeField);
   };
 

@@ -1,22 +1,22 @@
-import { GradeTestItem, QuestionTestItem } from 'redux/types';
+import { TestGradeItem, TestQuestionItem } from 'redux/types';
 
 export interface CreateTestState {
   testName: string;
-  testGrades: GradeTestItem[];
-  testQuestions: QuestionTestItem[];
+  testGrades: TestGradeItem[];
+  testQuestions: TestQuestionItem[];
 }
 
 export enum CreateActionTyped {
-  SET_NAME_TEST = 'SET_NAME_TEST',
-  SET_GRADES_TEST = 'SET_GRADES_TEST',
+  SET_TEST_NAME = 'SET_TEST_NAME',
+  SET_TEST_GRADES = 'SET_TEST_GRADES',
   SET_QUESTIONS_TEST = 'SET_QUESTIONS_TEST',
-  CLEAR_STATE_TEST = 'CLEAR_STATE_TEST',
+  CLEAR_TEST_STATE = 'CLEAR_TEST_STATE',
 }
 
 export interface CreateTestValue {
   testName: string;
-  testGrades: GradeTestItem[];
-  testQuestions: QuestionTestItem[];
+  testGrades: TestGradeItem[];
+  testQuestions: TestQuestionItem[];
   completed: boolean;
   questionsLength: number;
   result: string;
@@ -27,21 +27,21 @@ export interface NameValuesType {
 }
 
 export interface SetNameTestAction {
-  type: CreateActionTyped.SET_NAME_TEST;
+  type: CreateActionTyped.SET_TEST_NAME;
   values: NameValuesType;
 }
 
 export interface GradesValuesType {
-  testGrades: GradeTestItem[];
+  testGrades: TestGradeItem[];
 }
 
 export interface SettestGradesAction {
-  type: CreateActionTyped.SET_GRADES_TEST;
+  type: CreateActionTyped.SET_TEST_GRADES;
   values: GradesValuesType;
 }
 
 export interface QuestionsValuesType {
-  testQuestions: QuestionTestItem[];
+  testQuestions: TestQuestionItem[];
 }
 
 export interface SettestQuestions {
@@ -50,7 +50,7 @@ export interface SettestQuestions {
 }
 
 export interface CancelCreateTest {
-  type: CreateActionTyped.CLEAR_STATE_TEST;
+  type: CreateActionTyped.CLEAR_TEST_STATE;
 }
 
 export type ActionCreateTest =

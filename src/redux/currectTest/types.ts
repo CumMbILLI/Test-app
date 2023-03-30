@@ -1,13 +1,6 @@
 import { TestItem } from 'redux/types';
 
-export type ActionItemType =
-  | FetchItemAction
-  | FetchItemSuccess
-  | FetchItemError;
-
-export interface FetchItemAction {
-  type: FetchItemTypes.FETCH_ITEM;
-}
+export type ActionItemType = FetchItemSuccess | FetchItemError;
 
 export interface FetchItemSuccess {
   type: FetchItemTypes.FETCH_ITEM_SUCCESS;
@@ -20,7 +13,6 @@ export interface FetchItemError {
 }
 
 export enum FetchItemTypes {
-  FETCH_ITEM = 'FETCH_ITEM',
   FETCH_ITEM_SUCCESS = 'FETCH_ITEM_SUCCESS',
   FETCH_ITEM_ERROR = 'FETCH_ITEM_ERROR',
 }

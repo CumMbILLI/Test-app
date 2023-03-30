@@ -2,28 +2,27 @@ import React, { FC } from 'react';
 
 interface Props {
   userAnswer: string | null;
-  index: number;
+  questionIdx: string;
   answerText: string;
   handleChange: (value: string) => () => void;
 }
 
 const TestFieldItem: FC<Props> = ({
   userAnswer,
-  index,
+  questionIdx,
   answerText,
   handleChange,
 }) => {
-  const isChecked = userAnswer === index.toString();
+  const isChecked = userAnswer === questionIdx.toString();
 
   return (
     <>
       <input
         checked={isChecked}
-        onChange={handleChange(index.toString())}
+        onChange={handleChange(questionIdx.toString())}
         className='mr-3 cursor-pointer'
         name='radio'
         type='radio'
-        value={index}
       />
       {answerText}
     </>

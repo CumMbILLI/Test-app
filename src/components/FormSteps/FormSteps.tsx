@@ -11,11 +11,11 @@ interface Props {
 const FormSteps: FC<Props> = ({ finalStep, currentStep }) => {
   const [step, setStep] = useState(1);
 
+  const stepArray = arrayRange(1, finalStep, 1);
+
   useEffect(() => {
     setStep((prev) => (currentStep > prev ? currentStep : prev));
   }, [currentStep]);
-
-  const stepArray = arrayRange(1, finalStep, 1);
 
   return (
     <div className='w-full flex justify-center mb-10'>

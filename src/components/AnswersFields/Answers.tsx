@@ -11,7 +11,7 @@ interface Props<T extends FieldValues> {
   index: number;
   answers?: string[];
   errors?: any;
-  defaultValueRadio?: string;
+  defaultRadioValue?: string;
   className?: string;
 }
 
@@ -21,7 +21,7 @@ const Answers = <T extends FieldValues>({
   index,
   answers,
   errors,
-  defaultValueRadio,
+  defaultRadioValue,
   className,
 }: Props<T>) => {
   return (
@@ -30,7 +30,7 @@ const Answers = <T extends FieldValues>({
         <div className='flex w-full items-center' key={_index}>
           <div className='mr-3'>
             <RadioButton
-              defaultValue={defaultValueRadio}
+              defaultValue={defaultRadioValue}
               register={register}
               name={`${name}.correctAnswer` as Path<T>}
               value={`${_index}`}

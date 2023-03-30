@@ -3,7 +3,7 @@ import React, { FC } from 'react';
 import Button from 'components/Button/Button';
 
 interface Props {
-  currectQuestion: number;
+  correctQuestion: number;
   finalStep: number;
   prevQuestion: VoidFunction;
   nextQuestion: VoidFunction;
@@ -11,8 +11,8 @@ interface Props {
   finishTest: VoidFunction;
 }
 
-const TestButtonsNav: FC<Props> = ({
-  currectQuestion,
+const TestNavigation: FC<Props> = ({
+  correctQuestion,
   finalStep,
   prevQuestion,
   nextQuestion,
@@ -24,12 +24,12 @@ const TestButtonsNav: FC<Props> = ({
       <Button
         type='button'
         color='secondary'
-        onClick={1 <= currectQuestion ? prevQuestion : backStep}
+        onClick={correctQuestion >= 1 ? prevQuestion : backStep}
       >
         Назад
       </Button>
 
-      {finalStep - 1 > currectQuestion ? (
+      {finalStep > correctQuestion ? (
         <Button type='button' color='secondary' onClick={nextQuestion}>
           Впреред
         </Button>
@@ -42,4 +42,4 @@ const TestButtonsNav: FC<Props> = ({
   );
 };
 
-export default TestButtonsNav;
+export default TestNavigation;

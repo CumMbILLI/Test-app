@@ -16,6 +16,10 @@ interface Props {
   setCurrentStep: Dispatch<SetStateAction<number>>;
 }
 
+const validationSchema = yup.object().shape({
+  testName: yup.string().required(),
+});
+
 export const NameStep: FC<Props> = ({
   required = false,
   className,
@@ -24,10 +28,6 @@ export const NameStep: FC<Props> = ({
   const dispatch = useAppDispatch();
   const { testName } = useAppSelector((state) => state.testCreate);
 
-  const validationSchema = yup.object().shape({
-    testName: yup.string().required(),
-  });
-
   const {
     register,
     handleSubmit,
@@ -35,7 +35,7 @@ export const NameStep: FC<Props> = ({
   } = useForm<NameStepFields>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
-      testName: testName,
+      testName,
     },
   });
 

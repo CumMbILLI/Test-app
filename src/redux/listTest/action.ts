@@ -5,14 +5,9 @@ import { instance } from 'services/axios';
 import {
   ActionListType,
   FetchListTypes,
-  FetchListAction,
   FetchListSuccess,
   FetchListError,
 } from './types';
-
-const fetchList = (): FetchListAction => ({
-  type: FetchListTypes.FETCH_LIST,
-});
 
 const fetchListSuccess = (data: TestItem[]): FetchListSuccess => ({
   type: FetchListTypes.FETCH_LIST_SUCCESS,
@@ -27,8 +22,6 @@ const fetchListError = (errorMessage: string): FetchListError => ({
 export const getTestAsync = () => {
   return async (dispatch: Dispatch<ActionListType>) => {
     try {
-      dispatch(fetchList());
-
       const { data } = await instance.get('/tests');
 
       dispatch(fetchListSuccess(data));
@@ -40,11 +33,10 @@ export const getTestAsync = () => {
   };
 };
 
-//не получаеться затипизировать функцию getTestAsync
 export const removeTestItem = (id: string) => {
   return async (dispatch: Dispatch<any>) => {
     try {
-      instance.delete(`/tests/${id}`);
+      await instance.delete(`/tests/${id}`);
 
       dispatch(getTestAsync());
     } catch (e) {

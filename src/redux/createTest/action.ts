@@ -16,7 +16,7 @@ import {
 } from './types';
 
 const actionTypeCancel = (): CancelCreateTest => ({
-  type: CreateActionTyped.CLEAR_STATE_TEST,
+  type: CreateActionTyped.CLEAR_TEST_STATE,
 });
 
 export const createTestAsync = (values: CreateTestValue) => {
@@ -37,7 +37,7 @@ export const createTestAsync = (values: CreateTestValue) => {
 
 export const setNameTest = (values: NameValuesType) => {
   const action: SetNameTestAction = {
-    type: CreateActionTyped.SET_NAME_TEST,
+    type: CreateActionTyped.SET_TEST_NAME,
     values,
   };
 
@@ -46,7 +46,7 @@ export const setNameTest = (values: NameValuesType) => {
 
 export const setGradeTest = (values: GradesValuesType) => {
   const action: SettestGradesAction = {
-    type: CreateActionTyped.SET_GRADES_TEST,
+    type: CreateActionTyped.SET_TEST_GRADES,
     values,
   };
 
@@ -64,7 +64,7 @@ export const settestQuestions = (values: QuestionsValuesType) => {
 
 export const cancelTestCreation = () => {
   const action: CancelCreateTest = {
-    type: CreateActionTyped.CLEAR_STATE_TEST,
+    type: CreateActionTyped.CLEAR_TEST_STATE,
   };
 
   history.push('/');

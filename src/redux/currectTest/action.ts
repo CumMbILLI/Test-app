@@ -4,15 +4,10 @@ import { TestItem } from 'redux/types';
 import { instance } from 'services/axios';
 import {
   ActionItemType,
-  FetchItemAction,
   FetchItemError,
   FetchItemSuccess,
   FetchItemTypes,
 } from './types';
-
-const fetchItem = (): FetchItemAction => ({
-  type: FetchItemTypes.FETCH_ITEM,
-});
 
 const fetchItemSuccess = (data: TestItem[]): FetchItemSuccess => ({
   type: FetchItemTypes.FETCH_ITEM_SUCCESS,
@@ -27,8 +22,6 @@ const fetchItemError = (errorMessage: string): FetchItemError => ({
 export const getTestByIdAsync = (id: string) => {
   return async (dispatch: Dispatch<ActionItemType>) => {
     try {
-      dispatch(fetchItem());
-
       const { data } = await instance.get(`/tests?id=${id}`);
 
       dispatch(fetchItemSuccess(data));
@@ -43,8 +36,6 @@ export const getTestByIdAsync = (id: string) => {
 export const putTestAsync = (id: string, value: TestItem) => {
   return async (dispatch: Dispatch<ActionItemType>) => {
     try {
-      dispatch(fetchItem());
-
       const { data } = await instance.put(`tests/${id}`, value);
 
       dispatch(fetchItemSuccess([data]));

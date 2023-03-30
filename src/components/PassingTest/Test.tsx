@@ -2,13 +2,14 @@ import React, { FC, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import TestResult from './TestResult';
-import { QuestionTestItem, TestItem } from 'redux/types';
-import TestButtonsNav from './TestButtonsNav';
+import { TestQuestionItem, TestItem } from 'redux/types';
+import TestNavigation from './TestNavigation';
 import TestFields from './Fields/TestFields';
 import { history } from 'services/history';
 
-export interface QuestionItem extends QuestionTestItem {
+export interface QuestionItem extends TestQuestionItem {
   userAnswer: string | null;
+  test?: number[];
 }
 
 interface Props {
@@ -16,7 +17,7 @@ interface Props {
 }
 
 const Test: FC<Props> = ({ testItem }) => {
-  const [resultTest, setResulTest] = useState<(number | null)[] | null>(null);
+  const [resultTest, setResulTest] = useState<number[] | null>(null);
 
   const [questions, setQuestions] = useState<QuestionItem[]>(
     testItem.testQuestions.map((test) => ({ ...test, userAnswer: null }))
@@ -32,10 +33,10 @@ const Test: FC<Props> = ({ testItem }) => {
     if (questions) {
       setResulTest(
         questions
-          .map(({ correctAnswer, userAnswer, id }) =>
-            correctAnswer === userAnswer ? id : null
+          .filter(
+            ({ correctAnswer, userAnswer }) => correctAnswer === userAnswer
           )
-          .filter((item) => item !== null)
+          .map(({ id }) => id)
       );
     }
   };
@@ -96,14 +97,14 @@ const Test: FC<Props> = ({ testItem }) => {
       </span>
 
       <TestFields
-        questions={questions}
+        questionItem={questions[questionIdx]}
         questionIdx={questionIdx}
         handleChange={changeUserAnswer}
       />
 
-      <TestButtonsNav
-        currectQuestion={questionIdx}
-        finalStep={questions.length}
+      <TestNavigation
+        correctQuestion={questionIdx}
+        finalStep={questions.length - 1}
         nextQuestion={nextQuestion}
         prevQuestion={prevQuestion}
         backStep={backStep}

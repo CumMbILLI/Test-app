@@ -2,7 +2,7 @@ import { ActionListType } from './listTest/types';
 
 export type DispatchType = (args: ActionListType) => ActionListType;
 
-export interface QuestionTestItem {
+export interface TestQuestionItem {
   id: number;
   image?: string;
   questionTitle: string;
@@ -10,7 +10,7 @@ export interface QuestionTestItem {
   answers: string[];
 }
 
-export interface GradeTestItem {
+export interface TestGradeItem {
   id: number;
   gradeName: string;
   placeholder?: string;
@@ -21,8 +21,8 @@ export interface GradeTestItem {
 export interface TestItem {
   id: string;
   testName: string;
-  testGrades: GradeTestItem[];
-  testQuestions: QuestionTestItem[];
+  testGrades: TestGradeItem[];
+  testQuestions: TestQuestionItem[];
   completed: boolean;
   result: number | '-';
   questionsLength: number;

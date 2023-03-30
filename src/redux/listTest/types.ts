@@ -1,18 +1,10 @@
 import { TestItem } from 'redux/types';
 
-export type ActionListType =
-  | FetchListAction
-  | FetchListSuccess
-  | FetchListError;
+export type ActionListType = FetchListSuccess | FetchListError;
 
 export enum FetchListTypes {
-  FETCH_LIST = 'FETCH_LIST',
   FETCH_LIST_SUCCESS = 'FETCH_LIST_SUCCESS',
   FETCH_LIST_ERROR = 'FETCH_LIST_ERROR',
-}
-
-export interface FetchListAction {
-  type: FetchListTypes.FETCH_LIST;
 }
 
 export interface FetchListSuccess {

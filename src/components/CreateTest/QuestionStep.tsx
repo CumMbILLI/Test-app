@@ -17,21 +17,21 @@ interface Props {
   setCurrentStep: Dispatch<SetStateAction<number>>;
 }
 
+const validationSchema = yup.object().shape({
+  testQuestions: yup.array().of(
+    yup.object().shape({
+      id: yup.number(),
+      image: yup.string(),
+      questionTitle: yup.string().required(),
+      correctAnswer: yup.string().required(),
+      answers: yup.array().of(yup.string().required()),
+    })
+  ),
+});
+
 const QuestionStep: FC<Props> = ({ setCurrentStep }) => {
   const dispatch = useAppDispatch();
   const { testQuestions } = useAppSelector((state) => state.testCreate);
-
-  const validationSchema = yup.object().shape({
-    testQuestions: yup.array().of(
-      yup.object().shape({
-        id: yup.number(),
-        image: yup.string(),
-        questionTitle: yup.string().required(),
-        correctAnswer: yup.string().required(),
-        answers: yup.array().of(yup.string().required()),
-      })
-    ),
-  });
 
   const {
     register,
@@ -42,7 +42,7 @@ const QuestionStep: FC<Props> = ({ setCurrentStep }) => {
   } = useForm<QuestionsStepFields>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
-      testQuestions: testQuestions,
+      testQuestions,
     },
   });
 
@@ -56,17 +56,21 @@ const QuestionStep: FC<Props> = ({ setCurrentStep }) => {
     name: 'testQuestions',
   });
 
-  const defaultQuestionField = {
-    id: fields.length + 1,
-    image: '',
-    questionTitle: '',
-    correctAnswer: '0',
-    answers: ['', '', '', ''],
+  const createQuestion = () => {
+    const defaultQuestionField = {
+      id: fields.length + 1,
+      image: '',
+      questionTitle: '',
+      correctAnswer: '0',
+      answers: ['', '', '', ''],
+    };
+
+    append(defaultQuestionField);
   };
 
-  const createQuestion = () => append(defaultQuestionField);
-
-  const handleRemoveQuestion = (_id: number) => () => remove(_id);
+  const handleRemoveQuestion = (_id: number) => () => {
+    remove(_id);
+  };
 
   return (
     <form id='createTest' onSubmit={handleSubmit(onSubmit)}>
@@ -100,7 +104,7 @@ const QuestionStep: FC<Props> = ({ setCurrentStep }) => {
             />
             <div className='grid gap-3 m-5'>
               <Answers
-                defaultValueRadio={correctAnswer}
+                defaultRadioValue={correctAnswer}
                 name={`testQuestions.${index}`}
                 index={index}
                 register={register}

@@ -11,9 +11,6 @@ export const getTestsReducer = (
   action: ActionListType
 ): TestsListState => {
   switch (action.type) {
-    case FetchListTypes.FETCH_LIST:
-      return { ...state };
-
     case FetchListTypes.FETCH_LIST_SUCCESS:
       return { ...state, loading: false, testList: action.payload };
 

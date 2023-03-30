@@ -18,13 +18,13 @@ interface FieldProps {
   setCurrentStep: Dispatch<SetStateAction<number>>;
 }
 
-interface FieldFormItem {
+interface formFieldItem {
   step: number;
   component: ({ setCurrentStep }: FieldProps) => JSX.Element;
 }
 
 interface Props {
-  fieldsForm: FieldFormItem[];
+  fieldsForm: formFieldItem[];
   finalStep: number;
 }
 
@@ -35,11 +35,6 @@ const MasterForm: FC<Props> = ({ fieldsForm, finalStep }) => {
 
   const [currentStep, setCurrentStep] = useState(1);
 
-  useEffect(
-    () => setParams({ step: `${currentStep}` }),
-    [currentStep, setCurrentStep, setParams]
-  );
-
   const prevStep = () => setCurrentStep((prev) => --prev);
 
   const handleCancel = () => {
@@ -47,6 +42,11 @@ const MasterForm: FC<Props> = ({ fieldsForm, finalStep }) => {
 
     if (isCancel) dispatch(cancelTestCreation());
   };
+
+  useEffect(
+    () => setParams({ step: `${currentStep}` }),
+    [currentStep, setCurrentStep, setParams]
+  );
 
   return (
     <div className='flex justify-between mt-10 mx-24'>
@@ -59,11 +59,13 @@ const MasterForm: FC<Props> = ({ fieldsForm, finalStep }) => {
       <div className='w-[1000px] text-center '>
         <FormSteps finalStep={finalStep} currentStep={currentStep} />
 
-        {fieldsForm.map(({ step, component: Component }) =>
-          Number(params.get('step')) === step ? (
-            <Component key={step} setCurrentStep={setCurrentStep} />
-          ) : null
-        )}
+        {fieldsForm.map(({ step, component: Component }) => {
+          if (Number(params?.get('step')) !== step) {
+            return null;
+          }
+
+          return <Component key={step} setCurrentStep={setCurrentStep} />;
+        })}
       </div>
 
       <div className='w-8'>

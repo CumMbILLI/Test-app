@@ -45,12 +45,12 @@ export const setFieldsReducer = (
   action: ActionCreateTest
 ): CreateTestState => {
   switch (action.type) {
-    case CreateActionTyped.SET_NAME_TEST:
+    case CreateActionTyped.SET_TEST_NAME:
       return {
         ...state,
         testName: action.values?.testName,
       };
-    case CreateActionTyped.SET_GRADES_TEST:
+    case CreateActionTyped.SET_TEST_GRADES:
       return {
         ...state,
         testGrades: action.values?.testGrades,
@@ -60,12 +60,8 @@ export const setFieldsReducer = (
         ...state,
         testQuestions: action.values?.testQuestions,
       };
-    case CreateActionTyped.CLEAR_STATE_TEST:
-      return {
-        testName: '',
-        testGrades: INITIAL_GRADE_TEST,
-        testQuestions: INITIAL_QUESTIONS_TEST,
-      };
+    case CreateActionTyped.CLEAR_TEST_STATE:
+      return initialState;
 
     default:
       return state;

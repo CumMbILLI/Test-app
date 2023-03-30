@@ -1,5 +1,6 @@
-import React, { FC, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import React, { FC, useEffect, useState } from 'react';
+import classNames from 'classnames';
+
 import { putTestAsync } from 'redux/currectTest/action';
 import { useAppDispatch } from 'redux/hooks';
 import { TestItem } from 'redux/types';
@@ -7,29 +8,41 @@ import { QuestionItem } from './Test';
 
 interface Props {
   testId: string | null;
-  resultTest: (number | null)[];
+  resultTest: number[];
   testItem: TestItem;
   questions: QuestionItem[];
 }
 
-const TestResult: FC<Props> = ({ testItem, questions, resultTest }) => {
+const TABLE_HEADER = [
+  {
+    name: '№',
+    field: 'index',
+  },
+  {
+    name: 'Питання',
+    field: 'questionTitle',
+  },
+];
+
+const TestResult: FC<Props> = ({ testId, testItem, questions, resultTest }) => {
+  const [showDetailse, setShowDetailse] = useState(false);
+
   const dispatch = useAppDispatch();
 
-  const [params] = useSearchParams();
-
-  const testId = params.get('testId');
-
-  const resultPercent = (resultTest.length / questions.length) * 100;
+  const resultPercent = Math.round(
+    (resultTest.length / questions.length) * 100
+  );
 
   const wrongAnswersCount = questions.length - resultTest.length;
 
   const userGradeTest = testItem?.testGrades
-    .map(({ from, to, gradeName }) =>
-      resultPercent >= Number(from) && resultPercent <= Number(to)
-        ? gradeName
-        : null
-    )
-    .filter((item) => item !== null);
+    .map(({ from, to, gradeName }) => {
+      if (resultPercent >= Number(from) && resultPercent <= Number(to)) {
+        return gradeName;
+      }
+      return null;
+    })
+    .find((item) => item !== null);
 
   useEffect(() => {
     const value = {
@@ -42,7 +55,7 @@ const TestResult: FC<Props> = ({ testItem, questions, resultTest }) => {
   }, [dispatch]);
 
   return (
-    <div className='text-center'>
+    <div className='w-full'>
       <div className='grid gap-3 text-xl'>
         <h2 className='text-3xl'>Результат тесту</h2>
         <span>
@@ -53,7 +66,7 @@ const TestResult: FC<Props> = ({ testItem, questions, resultTest }) => {
             {resultPercent}%
           </span>
         </span>
-        {userGradeTest[0] && <span>Ваш ранг: {userGradeTest?.[0]}</span>}
+        {userGradeTest && <span>Ваш ранг: {userGradeTest}</span>}
       </div>
 
       <div className='text-base flex flex-col text-left border-t border-black mt-5 gap-2 py-2 px-4'>
@@ -61,6 +74,27 @@ const TestResult: FC<Props> = ({ testItem, questions, resultTest }) => {
         <span>Кількість правильних відповідей: {resultTest.length}</span>
         <span>Кількість неправильних відповідей: {wrongAnswersCount}</span>
       </div>
+
+      <button onClick={() => setShowDetailse((prev) => !prev)}>
+        Детальніше
+      </button>
+
+      {showDetailse && (
+        <div className='w-full bg-gray-100 grid gap-2'>
+          {questions.map(
+            ({ userAnswer, correctAnswer, questionTitle }, index) => (
+              <div
+                className={classNames('py-4 px-2 border border-red-500', {
+                  '!border-green-500': userAnswer === correctAnswer,
+                })}
+              >
+                <span className='mr-3'>{index + 1}.</span>
+                <span>{questionTitle}</span>
+              </div>
+            )
+          )}
+        </div>
+      )}
     </div>
   );
 };
