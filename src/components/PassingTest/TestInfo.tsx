@@ -9,13 +9,13 @@ interface Props {
   handleClick: VoidFunction;
 }
 
-type TableHeaderTyped = {
+type TableHeaderInfoTyped = {
   name: string;
   field: keyof TestItem;
   className: string;
 };
 
-const TABLE_HEADER: TableHeaderTyped[] = [
+const TABLE_HEADER: TableHeaderInfoTyped[] = [
   {
     name: 'Назва тесту',
     field: 'testName',
@@ -35,7 +35,7 @@ const TABLE_HEADER: TableHeaderTyped[] = [
 
 const TestInfo: FC<Props> = ({ testData, handleClick }) => {
   return (
-    <div className='w-[1000px] flex flex-col items-center gap-8 mt-4'>
+    <div className='w-[800px] flex flex-col items-center gap-8 mt-4'>
       <h2 className='text-2xl'>Проходження тесту</h2>
       <Table header={TABLE_HEADER} data={testData} />
       <Button

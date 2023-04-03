@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-import { QuestionItem } from '../Test';
 import TestFieldItem from './TestFieldItem';
+import { QuestionItem } from '../types';
 
 interface Props {
   questionItem: QuestionItem;

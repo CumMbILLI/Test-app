@@ -77,7 +77,7 @@
       ],
       "completed": true,
       "questionsLength": 4,
-      "result": 100,
+      "result": 0,
       "id": 1
     },
     {
@@ -253,7 +253,7 @@
       ],
       "completed": true,
       "questionsLength": 12,
-      "result": 8,
+      "result": 67,
       "id": 2
     }
   ]

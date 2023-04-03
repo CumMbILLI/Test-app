@@ -21,7 +21,7 @@ const Table = <T, K extends keyof T>({ header, data }: Props<T, K>) => {
             <th
               key={name}
               className={classNames(
-                'border border-black text-lg h-16',
+                'border border-black text-lg text-center h-16',
                 className
               )}
             >
@@ -33,9 +33,10 @@ const Table = <T, K extends keyof T>({ header, data }: Props<T, K>) => {
       <tbody>
         {data?.map((item, index) => (
           <tr key={index}>
-            {header.map(({ field }, index) => (
-              <td key={index} className='border border-black h-12'>
+            {header.map(({ field }, _index) => (
+              <td key={field as string} className='border border-black h-12'>
                 <span className='flex justify-center'>
+                  {field === 'index' && index + 1}
                   {item[field] as string}
                 </span>
               </td>

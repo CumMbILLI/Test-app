@@ -1,23 +1,19 @@
 import React, { FC, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import TestResult from './TestResult';
-import { TestQuestionItem, TestItem } from 'redux/types';
+import TestResult from './TestResult/TestResult';
+import { TestItem } from 'redux/types';
 import TestNavigation from './TestNavigation';
 import TestFields from './Fields/TestFields';
 import { history } from 'services/history';
-
-export interface QuestionItem extends TestQuestionItem {
-  userAnswer: string | null;
-  test?: number[];
-}
+import { QuestionItem } from './types';
 
 interface Props {
   testItem: TestItem;
 }
 
 const Test: FC<Props> = ({ testItem }) => {
-  const [resultTest, setResulTest] = useState<number[] | null>(null);
+  const [resultTest, setResulTest] = useState<number | null>(null);
 
   const [questions, setQuestions] = useState<QuestionItem[]>(
     testItem.testQuestions.map((test) => ({ ...test, userAnswer: null }))
@@ -31,13 +27,11 @@ const Test: FC<Props> = ({ testItem }) => {
 
   const calculateResult = () => {
     if (questions) {
-      setResulTest(
-        questions
-          .filter(
-            ({ correctAnswer, userAnswer }) => correctAnswer === userAnswer
-          )
-          .map(({ id }) => id)
+      const correctAnswerArray = questions.filter(
+        ({ correctAnswer, userAnswer }) => correctAnswer === userAnswer
       );
+
+      setResulTest(correctAnswerArray.length);
     }
   };
 
@@ -71,7 +65,7 @@ const Test: FC<Props> = ({ testItem }) => {
 
   if (!questions) return null;
 
-  if (resultTest && questions)
+  if (resultTest !== null && questions)
     return (
       <TestResult
         testId={testId}
