@@ -9,8 +9,6 @@ import {
   GradesValuesType,
   NameValuesType,
   QuestionsValuesType,
-  SettestGradesAction,
-  SettestQuestions,
   SetNameTestAction,
   CreateTestValue,
 } from './types';
@@ -49,21 +47,15 @@ export const setGradeTest = (values: GradesValuesType) => ({
   values,
 });
 
-export const settestQuestions = (values: QuestionsValuesType) => {
-  const action: SettestQuestions = {
-    type: CreateActionTyped.SET_QUESTIONS_TEST,
-    values,
-  };
-
-  return (dispatch: Dispatch<ActionCreateTest>) => dispatch(action);
-};
+export const settestQuestions = (values: QuestionsValuesType) => ({
+  type: CreateActionTyped.SET_QUESTIONS_TEST,
+  values,
+});
 
 export const cancelTestCreation = () => {
-  const action: CancelCreateTest = {
-    type: CreateActionTyped.CLEAR_TEST_STATE,
-  };
-
   history.push('/');
 
-  return (dispatch: Dispatch<ActionCreateTest>) => dispatch(action);
+  return {
+    type: CreateActionTyped.CLEAR_TEST_STATE,
+  };
 };
