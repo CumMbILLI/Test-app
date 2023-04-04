@@ -1,6 +1,12 @@
 import React from 'react';
 import cn from 'classnames';
-import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
+import {
+  FieldError,
+  FieldValues,
+  Merge,
+  Path,
+  UseFormRegister,
+} from 'react-hook-form';
 
 import RadioButton from 'components/FormField/RadioButton';
 import { Input } from 'components/FormField/Input';
@@ -8,9 +14,8 @@ import { Input } from 'components/FormField/Input';
 interface Props<T extends FieldValues> {
   name: Path<T>;
   register: UseFormRegister<T>;
-  index: number;
   answers?: string[];
-  errors?: any;
+  errors?: Merge<FieldError, (FieldError | undefined)[]>;
   defaultRadioValue?: string;
   className?: string;
 }
@@ -18,7 +23,6 @@ interface Props<T extends FieldValues> {
 const Answers = <T extends FieldValues>({
   name,
   register,
-  index,
   answers,
   errors,
   defaultRadioValue,
@@ -26,25 +30,23 @@ const Answers = <T extends FieldValues>({
 }: Props<T>) => {
   return (
     <div className={cn('flex flex-col gap-2', className)}>
-      {answers?.map((answerText, _index) => (
-        <div className='flex w-full items-center' key={_index}>
+      {answers?.map((_, index) => (
+        <div className='flex w-full items-center' key={index}>
           <div className='mr-3'>
             <RadioButton
               defaultValue={defaultRadioValue}
               register={register}
               name={`${name}.correctAnswer` as Path<T>}
-              value={`${_index}`}
+              value={`${index}`}
             />
           </div>
 
           <div className='w-full'>
             <Input
-              isError={Boolean(
-                errors?.testQuestions?.[index]?.answers?.[_index]?.message
-              )}
+              isError={Boolean(errors?.[index]?.message)}
               placeholder='Відповідь'
               register={register}
-              name={`${name}.answers.${_index}` as Path<T>}
+              name={`${name}.answers.${index}` as Path<T>}
             />
           </div>
         </div>

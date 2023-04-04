@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import cn from 'classnames';
 
 import { arrayRange } from 'utils/arrayRange';
@@ -9,13 +9,7 @@ interface Props {
 }
 
 const FormSteps: FC<Props> = ({ finalStep, currentStep }) => {
-  const [step, setStep] = useState(1);
-
   const stepArray = arrayRange(1, finalStep, 1);
-
-  useEffect(() => {
-    setStep((prev) => (currentStep > prev ? currentStep : prev));
-  }, [currentStep]);
 
   return (
     <div className='w-full flex justify-center mb-10'>
@@ -32,7 +26,7 @@ const FormSteps: FC<Props> = ({ finalStep, currentStep }) => {
               {
                 '!border-green-500 !bg-green-500 text-white':
                   currentStep === value,
-                '!border-green-500': value <= step,
+                '!border-green-500': value <= currentStep,
               }
             )}
           >
@@ -43,7 +37,7 @@ const FormSteps: FC<Props> = ({ finalStep, currentStep }) => {
               className={cn(
                 'w-full h-1 bg-gray-400 top-1/2 -translate-y-1/2 z-0 text-gray-400 ease-linear duration-300 mx-3',
                 {
-                  '!text-black !bg-green-500': value < step,
+                  '!text-black !bg-green-500': value < currentStep,
                 }
               )}
             />

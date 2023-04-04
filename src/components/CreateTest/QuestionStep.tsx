@@ -106,10 +106,9 @@ const QuestionStep: FC<Props> = ({ setCurrentStep }) => {
               <Answers
                 defaultRadioValue={correctAnswer}
                 name={`testQuestions.${index}`}
-                index={index}
                 register={register}
                 answers={answers}
-                errors={errors}
+                errors={errors?.testQuestions?.[index]?.answers}
               />
             </div>
           </div>

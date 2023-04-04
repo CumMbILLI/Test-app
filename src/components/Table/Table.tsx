@@ -33,7 +33,7 @@ const Table = <T, K extends keyof T>({ header, data }: Props<T, K>) => {
       <tbody>
         {data?.map((item, index) => (
           <tr key={index}>
-            {header.map(({ field }, _index) => (
+            {header.map(({ field }) => (
               <td key={field as string} className='border border-black h-12'>
                 <span className='flex justify-center'>
                   {field === 'index' && index + 1}

@@ -19,17 +19,17 @@ const TABLE_HEADER: TableHeaderInfoTyped[] = [
   {
     name: 'Назва тесту',
     field: 'testName',
-    className: '!w-[300px]',
+    className: 'w-72',
   },
   {
     name: 'Кількість питань',
     field: 'questionsLength',
-    className: '!w-[150px]',
+    className: 'w-36',
   },
   {
     name: 'Результат',
     field: 'result',
-    className: '!w-[150px]',
+    className: 'w-36',
   },
 ];
 

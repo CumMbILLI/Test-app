@@ -48,10 +48,10 @@ const DetailedStatistics: FC<Props> = ({ questions, resultTest, testId }) => {
     })
   );
 
-  const [showDetailse, setShowDetailse] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
 
-  const changeShowDetailse = () => {
-    setShowDetailse((prev) => !prev);
+  const changeShowDetails = () => {
+    setShowDetails((prev) => !prev);
   };
 
   const backToStart = () => {
@@ -75,9 +75,9 @@ const DetailedStatistics: FC<Props> = ({ questions, resultTest, testId }) => {
             type='button'
             color='secondary'
             className='w-52'
-            onClick={changeShowDetailse}
+            onClick={changeShowDetails}
           >
-            {showDetailse ? 'Приховати' : 'Детальніше'}
+            {showDetails ? 'Приховати' : 'Детальніше'}
           </Button>
         </div>
         <Button
@@ -90,7 +90,7 @@ const DetailedStatistics: FC<Props> = ({ questions, resultTest, testId }) => {
         </Button>
       </div>
 
-      {showDetailse && <Table header={TABLE_HEADER} data={tableData} />}
+      {showDetails && <Table header={TABLE_HEADER} data={tableData} />}
     </div>
   );
 };
