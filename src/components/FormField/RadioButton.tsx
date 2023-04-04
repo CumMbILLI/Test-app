@@ -1,23 +1,26 @@
 import React from 'react';
-import { Path, UseFormRegister } from 'react-hook-form';
+import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
 
-interface Props<T extends Record<string, any>> {
+interface Props<T extends FieldValues> {
   name: Path<T>;
   register: UseFormRegister<T>;
   required?: boolean;
   className?: string;
-  value: number;
+  value: string;
+  defaultValue?: string;
 }
 
-const RadioButton = <T extends Record<string, any>>({
+const RadioButton = <T extends FieldValues>({
   value,
   name,
   register,
   required,
   className,
+  defaultValue,
 }: Props<T>) => {
   return (
     <input
+      defaultChecked={defaultValue === value}
       className={className}
       {...register(name, { required })}
       type='radio'

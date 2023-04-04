@@ -7,6 +7,7 @@ import { PATHNAMES } from 'constants/routes';
 
 import Home from 'pages/Home';
 import CreateTest from 'pages/CreateTest';
+import PassingTest from 'pages/PassingTest';
 
 const layoutRoutes: { element: ReactNode; path: PATHNAMES }[] = [
   {
@@ -16,6 +17,10 @@ const layoutRoutes: { element: ReactNode; path: PATHNAMES }[] = [
   {
     element: <CreateTest />,
     path: PATHNAMES.CREATE_TEST,
+  },
+  {
+    element: <PassingTest />,
+    path: PATHNAMES.PASSING_TEST,
   },
 ];
 

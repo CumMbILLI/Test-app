@@ -3,24 +3,25 @@ export interface NameStepFields {
 }
 
 export interface QuestionsStepFields {
-  question: QuestionItem[];
+  testQuestions: QuestionItem[];
 }
 
 interface QuestionItem {
   id: number;
   image?: string;
   questionTitle: string;
-  correctAnswer: string | string[];
+  correctAnswer: string;
   answers: string[];
 }
 
 export interface GradesFields {
-  estimates: GradeItem[];
+  testGrades: GradeItem[];
 }
 
 interface GradeItem {
   id: number;
-  name: string;
-  result: string[];
+  gradeName: string;
+  from: string;
+  to: string;
   placeholder?: string;
 }
