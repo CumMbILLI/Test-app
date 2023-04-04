@@ -44,14 +44,10 @@ export const setNameTest = (values: NameValuesType) => {
   return (dispatch: Dispatch<ActionCreateTest>) => dispatch(action);
 };
 
-export const setGradeTest = (values: GradesValuesType) => {
-  const action: SettestGradesAction = {
-    type: CreateActionTyped.SET_TEST_GRADES,
-    values,
-  };
-
-  return (dispatch: Dispatch<ActionCreateTest>) => dispatch(action);
-};
+export const setGradeTest = (values: GradesValuesType) => ({
+  type: CreateActionTyped.SET_TEST_GRADES,
+  values,
+});
 
 export const settestQuestions = (values: QuestionsValuesType) => {
   const action: SettestQuestions = {
