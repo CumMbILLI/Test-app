@@ -86,9 +86,9 @@ const TablePDF = <T, K extends keyof T>({
         ))}
       </View>
       {data.map((item: any) => (
-        <View style={styles.tableRow}>
+        <View key={item} style={styles.tableRow}>
           {tableHeader.map(({ field }, index) => (
-            <View style={styles.tableCell}>
+            <View key={field as string} style={styles.tableCell}>
               {field === 'index' && (
                 <Text style={styles.text}>{index + 1}</Text>
               )}
