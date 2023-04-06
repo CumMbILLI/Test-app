@@ -51,7 +51,6 @@ const TestResult: FC<Props> = ({ testId, testItem, questions, resultTest }) => {
         </span>
         {userGradeTest && <span>Ваш ранг: {userGradeTest}</span>}
       </div>
-
       <DetailedStatistics
         questions={questions}
         resultTest={resultTest}

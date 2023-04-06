@@ -24,17 +24,28 @@ const TestNavigation: FC<Props> = ({
       <Button
         type='button'
         color='secondary'
+        className='w-full'
         onClick={correctQuestion >= 1 ? prevQuestion : backStep}
       >
         Назад
       </Button>
 
       {finalStep > correctQuestion ? (
-        <Button type='button' color='secondary' onClick={nextQuestion}>
+        <Button
+          type='button'
+          color='secondary'
+          className='w-full'
+          onClick={nextQuestion}
+        >
           Впреред
         </Button>
       ) : (
-        <Button onClick={finishTest} color='primary' type='button'>
+        <Button
+          color='primary'
+          type='button'
+          className='w-full'
+          onClick={finishTest}
+        >
           Завершити
         </Button>
       )}

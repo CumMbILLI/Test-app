@@ -1,10 +1,11 @@
-import classNames from 'classnames';
+import cn from 'classnames';
 import React from 'react';
 
 export interface TableHeaderProps<K> {
   name: string;
   field: K;
-  className?: string;
+  tHeaderClassName?: string;
+  tBodyClassName?: string;
 }
 
 interface Props<T, K extends keyof T> {
@@ -17,12 +18,12 @@ const Table = <T, K extends keyof T>({ header, data }: Props<T, K>) => {
     <table className='w-full border border-black'>
       <thead className='border border-black'>
         <tr>
-          {header.map(({ name, className }) => (
+          {header.map(({ name, tHeaderClassName }) => (
             <th
               key={name}
-              className={classNames(
+              className={cn(
                 'border border-black text-lg text-center h-16',
-                className
+                tHeaderClassName
               )}
             >
               <span>{name}</span>
@@ -33,9 +34,12 @@ const Table = <T, K extends keyof T>({ header, data }: Props<T, K>) => {
       <tbody>
         {data?.map((item, index) => (
           <tr key={index}>
-            {header.map(({ field }) => (
-              <td key={field as string} className='border border-black h-12'>
-                <span className='flex justify-center'>
+            {header.map(({ field, tBodyClassName }) => (
+              <td
+                key={field as string}
+                className='border border-black h-12 px-4'
+              >
+                <span className={cn('flex justify-center', tBodyClassName)}>
                   {field === 'index' && index + 1}
                   {item[field] as string}
                 </span>

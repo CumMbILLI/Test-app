@@ -23,7 +23,7 @@ const Button: FC<Props> = ({
       type={type}
       onClick={onClick}
       className={cn(
-        'p-2 text-white font-bold rounded-lg hover:opacity-80 duration-300 w-full',
+        'p-2 text-white font-bold rounded-lg hover:opacity-80 duration-300',
         className,
         {
           'bg-green-500': color === 'primary',

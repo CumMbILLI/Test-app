@@ -1,18 +1,26 @@
-import { TestQuestionItem } from 'redux/types';
+import { TestItem, TestQuestionItem } from 'redux/types';
 
 export interface QuestionItem extends TestQuestionItem {
   userAnswer: string | null;
   test?: number[];
 }
 
-export type TableHeaderResultTyped = {
+export type TableHeader = {
   name: string;
-  field: keyof TableData;
-  className?: string;
+  tHeaderClassName?: string;
+  tBodyClassName?: string;
 };
+
+export interface TableHeaderInfo extends TableHeader {
+  field: keyof TestItem;
+}
+
+export interface TableHeaderResult extends TableHeader {
+  field: keyof TableData;
+}
 
 type TableData = {
   questionTitle: string;
-  isCorrectAnswer: React.ReactNode;
+  svgComponent: React.ReactNode;
   numberQuestion: number;
 };
