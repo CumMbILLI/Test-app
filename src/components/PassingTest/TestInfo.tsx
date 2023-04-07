@@ -2,34 +2,30 @@ import React, { FC } from 'react';
 
 import Button from 'components/Button/Button';
 import Table from 'components/Table/Table';
+
 import { TestItem } from 'redux/types';
+import { TableHeaderInfo } from './types';
 
 interface Props {
   testData: TestItem[];
   handleClick: VoidFunction;
 }
 
-type TableHeaderInfoTyped = {
-  name: string;
-  field: keyof TestItem;
-  className: string;
-};
-
-const TABLE_HEADER: TableHeaderInfoTyped[] = [
+const TABLE_HEADER: TableHeaderInfo[] = [
   {
     name: 'Назва тесту',
     field: 'testName',
-    className: 'w-72',
+    tHeaderClassName: 'w-72',
   },
   {
     name: 'Кількість питань',
     field: 'questionsLength',
-    className: 'w-36',
+    tHeaderClassName: 'w-36',
   },
   {
     name: 'Результат',
     field: 'result',
-    className: 'w-36',
+    tHeaderClassName: 'w-36',
   },
 ];
 

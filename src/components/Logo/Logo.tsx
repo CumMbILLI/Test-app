@@ -8,7 +8,9 @@ import { ReactComponent as CapSVG } from 'assets/cap.svg';
 const Logo = () => {
   const dispatch = useAppDispatch();
 
-  const handleLogo = () => dispatch(cancelTestCreation());
+  const handleLogo = () => {
+    dispatch(cancelTestCreation());
+  };
 
   return (
     <div
