@@ -7,7 +7,6 @@ interface Props {
   finalStep: number;
   prevQuestion: VoidFunction;
   nextQuestion: VoidFunction;
-  backStep: VoidFunction;
   finishTest: VoidFunction;
 }
 
@@ -16,7 +15,7 @@ const TestNavigation: FC<Props> = ({
   finalStep,
   prevQuestion,
   nextQuestion,
-  backStep,
+
   finishTest,
 }) => {
   return (
@@ -25,7 +24,7 @@ const TestNavigation: FC<Props> = ({
         type='button'
         color='secondary'
         className='w-full'
-        onClick={correctQuestion >= 1 ? prevQuestion : backStep}
+        onClick={prevQuestion}
       >
         Назад
       </Button>

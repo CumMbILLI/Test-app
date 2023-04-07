@@ -52,13 +52,15 @@ const Test: FC<Props> = ({ testItem }) => {
   };
 
   const prevQuestion = () => {
-    const prevStep = Number(params.get('questionIdx')) - 1;
+    const currentStep = Number(params.get('questionIdx'));
 
-    setParams(`testId=${params.get('testId')}&questionIdx=${prevStep}`);
-  };
+    if (currentStep >= 1) {
+      const prevStep = currentStep - 1;
 
-  const backStep = () => {
-    setParams(`testId=${params.get('testId')}`);
+      setParams(`testId=${params.get('testId')}&questionIdx=${prevStep}`);
+    } else {
+      setParams(`testId=${params.get('testId')}`);
+    }
   };
 
   if (!testId) history.push('/');
@@ -101,7 +103,6 @@ const Test: FC<Props> = ({ testItem }) => {
         finalStep={questions.length - 1}
         nextQuestion={nextQuestion}
         prevQuestion={prevQuestion}
-        backStep={backStep}
         finishTest={calculateResult}
       />
     </div>
